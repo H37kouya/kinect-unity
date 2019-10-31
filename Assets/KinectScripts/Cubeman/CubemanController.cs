@@ -48,9 +48,6 @@ public class CubemanController : MonoBehaviour
     private Vector3 initialPosOffset = Vector3.zero;
     private uint initialPosUserID = 0;
 
-    // メインカメラ
-    private Camera _mainCamera;
-
     void Start()
     {
         for (int i = 0; i < 100; i++)
@@ -94,10 +91,6 @@ public class CubemanController : MonoBehaviour
         initialPosition = transform.position;
         initialRotation = transform.rotation;
         //transform.rotation = Quaternion.identity;
-
-        // カメラオブジェクトを取得します
-        GameObject mainCamera = GameObject.Find("Main Camera");
-        _mainCamera = mainCamera.GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -289,41 +282,4 @@ public class CubemanController : MonoBehaviour
         }
 
     }
-
-    private Vector3 getScreenTopLeft()
-    {
-        // 画面の左上を取得
-        Vector3 topLeft = _mainCamera.ScreenToWorldPoint(Vector3.zero);
-        // 上下反転させる
-        topLeft.Scale(new Vector3(1f, -1f, 1f));
-        return topLeft;
-    }
-
-    private Vector3 getScreenBottomRight()
-    {
-        // 画面の右下を取得
-        Vector3 bottomRight = _mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0.0f));
-        // 上下反転させる
-        bottomRight.Scale(new Vector3(1f, -1f, 1f));
-        return bottomRight;
-    }
-
-    private Vector3 getScreenWidth()
-    {
-        // 画面の右下を取得
-        Vector3 topRight = _mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f));
-        // 上下反転させる
-        topRight.Scale(new Vector3(1f, -1f, 1f));
-        return topRight;
-    }
-
-    private Vector3 getScreenHeight()
-    {
-        // 画面の右下を取得
-        Vector3 bottomLeft = _mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0.0f));
-        // 上下反転させる
-        bottomLeft.Scale(new Vector3(1f, -1f, 1f));
-        return bottomLeft;
-    }
-
 }
