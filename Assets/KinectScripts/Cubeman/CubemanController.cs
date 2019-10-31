@@ -218,25 +218,6 @@ public class CubemanController : MonoBehaviour
                         if (bones[parI].gameObject.activeSelf)
                         {
                             lines[i].gameObject.SetActive(true);
-                            // cubes[0].gameObject.SetActive(true);
-                            // Debug.Log("HelloWorld"); // Hello Worldのデバッグ console内に出力
-                            // Debug.Log(i * 10);
-                            // Debug.Log(new Color(i * 10, i * 10, 255 - i * 10));
-
-                            // SpriteRenderer spriteCubeRenderer = cubes[0].GetComponent<SpriteRenderer>();
-                            // Bounds bounds = spriteCubeRenderer.bounds;
-                            // Vector3 cubeVector3 = bounds.size;
-
-                            float SWidth = getScreenBottomRight().x;
-                            float SHeight = getScreenBottomRight().y;
-                            Debug.Log(SWidth);
-                            Debug.Log(SHeight);
-
-                            // SWidth - 50f, SHeight - 50f, 0.0f
-                            // posParent.transform.localPosition
-                            // Debug.Log(posParent);
-
-                            // float ty = Math.Abs(posLocalJoint.y / 8.0f);
 
                             if (i == 7)
                             {
@@ -247,23 +228,7 @@ public class CubemanController : MonoBehaviour
                                     posLocalJoint.z
                                 );
                             }
-                            //  = transform.TransformPoint(posParent);
-                            // float cubeX = cubes[0].transform.position.x;
-                            // float cubeY = cubes[0].transform.position;
-                            // Debug.Log(cubeX);
-                            // Debug.Log(cubeY);
-                            // float cubeX = cubeVector3.x;
-                            // float cubeY = cubeVector3.y;
-                            // float ratioX = SWidth / cubeX;
-                            // float ratioY = SWidth / cubeY;
-                            // cubeVector3.z
 
-                            // cubes[0].transform.localPosition = new Vector3(
-                            //     posParent.x * ratioX,
-                            //     posParent.y * ratioY,
-                            //     posParent.z
-                            // );
-                            // new Color(i * 10, i * 10, 255 - i * 10)
                             if (i == 0)
                             {
                                 cubes[0].GetComponent<Renderer>().material.color = Color.red;
