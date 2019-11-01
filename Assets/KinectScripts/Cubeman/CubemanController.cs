@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
-using System.Collections;
+using System.Collections;]
+using TimerBusiness;
 
 // MonoBehaviourはUnityEngineの継承
 public class CubemanController : MonoBehaviour
@@ -48,6 +49,8 @@ public class CubemanController : MonoBehaviour
     private Vector3 initialPosOffset = Vector3.zero;
     private uint initialPosUserID = 0;
 
+    private TimerBusiness Timer;
+
     void Start()
     {
         for (int i = 0; i < 100; i++)
@@ -78,6 +81,8 @@ public class CubemanController : MonoBehaviour
 
         // array holding the skeleton lines
         lines = new LineRenderer[bones.Length];
+
+        Timer = new TimerBusiness();
 
         if (SkeletonLine)
         {
