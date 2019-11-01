@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
-using System.Collections;]
-using TimerBusiness;
+using System.Collections;
 
 // MonoBehaviourはUnityEngineの継承
 public class CubemanController : MonoBehaviour
@@ -83,6 +82,7 @@ public class CubemanController : MonoBehaviour
         lines = new LineRenderer[bones.Length];
 
         Timer = new TimerBusiness();
+        Timer.SetStopTime(30, true);
 
         if (SkeletonLine)
         {
@@ -105,6 +105,9 @@ public class CubemanController : MonoBehaviour
 
         // get 1st player
         uint playerID = manager != null ? manager.GetPlayer1ID() : 0;
+
+        // タイマーの更新
+        Timer.TimerUpdate();
 
         if (playerID <= 0)
         {
