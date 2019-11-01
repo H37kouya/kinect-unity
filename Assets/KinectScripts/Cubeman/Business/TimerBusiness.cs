@@ -2,12 +2,16 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+// namespace TimerBusiness
+// {
 public class TimerBusiness
 {
     // Timer 秒を管理
     private int TimerSecond;
     // Timer フレームレートを管理
     private int TimerFrame;
+    // Timerを止める時間を管理 フレームレート単位
+    private int StopTime = 300 * 30;
 
     // fps を管理
     private int fps;
@@ -31,11 +35,11 @@ public class TimerBusiness
     }
 
     /**
-     * fps の値を返す
-     *
-     * fps = 30 のとき
-     * return 0 <= x <= 30
-     */
+    * fps の値を返す
+    *
+    * fps = 30 のとき
+    * return 0 <= x <= 30
+    */
     public int GetFpsCount()
     {
         return this.TimerFrame % this.fps;
@@ -53,6 +57,17 @@ public class TimerBusiness
         return this.TimerFrame;
     }
 
+    // アプリケーションの強制終了をするメソッド
+    private void QuitApplication()
+    {
+        Debug.Log("強制終了");
+        // 条件付きコンパイル
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+            UnityEngine.Application.Quit();
+#endif
+    }
 
     // timerをスタートするときの初期化用のコード
     private void TimerStart()
@@ -67,6 +82,12 @@ public class TimerBusiness
     {
         this.TimerFrame++;
         this.TimerSecond = this.TimerFrame / this.fps;
+
+        // ストップしたい時間を超えたら強制終了関数を実行
+        if (StopTime < TimerFrame)
+        {
+            this.QuitApplication();
+        }
     }
 
     // デバッグモードをセットする
@@ -74,4 +95,19 @@ public class TimerBusiness
     {
         this.DebugMode = DebugMode;
     }
+
+    // StopTimeをセットする
+    public void SetStopTime(int StopTime, bool SecondMode = true)
+    {
+        // 入力が秒単位だったら、fps単位に変換
+        if (SecondMode)
+        {
+            this.StopTime = StopTime * this.fps;
+        }
+        else
+        {
+            this.StopTime = StopTime;
+        }
+    }
 }
+//}
