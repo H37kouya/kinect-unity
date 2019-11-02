@@ -48,7 +48,7 @@ public class CubemanController : MonoBehaviour
     private Vector3 initialPosOffset = Vector3.zero;
     private uint initialPosUserID = 0;
 
-    private TimerBusiness Timer;
+    // private TimerBusiness Timer;
 
     void Start()
     {
@@ -81,8 +81,8 @@ public class CubemanController : MonoBehaviour
         // array holding the skeleton lines
         lines = new LineRenderer[bones.Length];
 
-        Timer = new TimerBusiness();
-        Timer.SetStopTime(30, true);
+        // Timer = new TimerBusiness();
+        // Timer.SetStopTime(30, true);
 
         if (SkeletonLine)
         {
@@ -107,7 +107,7 @@ public class CubemanController : MonoBehaviour
         uint playerID = manager != null ? manager.GetPlayer1ID() : 0;
 
         // タイマーの更新
-        Timer.TimerUpdate();
+        // Timer.TimerUpdate();
 
         if (playerID <= 0)
         {
