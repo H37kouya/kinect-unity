@@ -45,15 +45,18 @@ public class PatternEffectController : MonoBehaviour
     void Start()
     {
         PatternObject = new GameObject[] {
-            Cube0, Sphere, Cube1, Cube2,
-            Cube3, Cube4, Cube5, Cube6,
-            Cube7, Cube8
+            Cube0, Sphere, Cube1, Cube2, // 0 - 3
+            Cube3, Cube4, Cube5, Cube6, // 4 - 7
+            Cube7, Cube8 // 8 - 11 
+// 12 - 15
         };
 
+        // 配列の初期化 領域の確保
         VisibleTime = new float[PatternObject.Length];
         VisibleTimeBool = new bool[PatternObject.Length];
         outputPositions = new Vector3[PatternObject.Length];
 
+        // 配列を既定の値で初期化
         for (int i = 0; i < PatternObject.Length; i++)
         {
             PatternObjectDisVisible(i);
@@ -115,11 +118,13 @@ public class PatternEffectController : MonoBehaviour
         }
     }
 
+    // 座標が特定の誤差以下かを判別する
     bool EqualCoordinate(float coord1, float coord2)
     {
         return Mathf.Abs(coord1 - coord2) < 0.1;
     }
 
+    // 座標がほぼ同じか判別する
     bool EqualVector3(Vector3 vec1, Vector3 vec2)
     {
         if (!EqualCoordinate(vec1.x, vec2.x))
@@ -140,11 +145,13 @@ public class PatternEffectController : MonoBehaviour
         return true;
     }
 
+    // PatternObjectの表示
     void PatternObjectVisible(int joint)
     {
         PatternObject[joint].SetActive(true);
     }
 
+    // PatternObjectの非表示
     void PatternObjectDisVisible(int joint)
     {
         PatternObject[joint].SetActive(false);
