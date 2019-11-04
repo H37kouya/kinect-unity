@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.IO;
+using System.Collections.Generic;
 
 public class PatternEffectController : MonoBehaviour
 {
@@ -58,7 +59,7 @@ public class PatternEffectController : MonoBehaviour
         {
             PatternObjectDisVisible(i);
             // outputPositions[i] = new Vector3();
-            VisibleTime[i] = 0.0f;
+            // VisibleTime[i] = 0.0f;
             VisibleTimeBool[i] = false;
         }
 
@@ -81,13 +82,12 @@ public class PatternEffectController : MonoBehaviour
                     {
                         // output the joint position for easy tracking
                         Vector3 jointPos = manager.GetJointPosition(userId, joint);
-                        Debug.Log(jointPos);
-
-
+                        // Debug.Log(jointPos);
 
                         if (!EqualVector3(jointPos, PatternObject[joint].transform.position))
                         {
-                            jointPos.x *= 7.0f;
+                            // jointPos.x *= 15.0f;
+                            jointPos.x = 20 * Mathf.Pow(jointPos.x, 3); // 通常使用で発散しないギリギリライン
                             VisibleTime[joint] = 0.0f;
                             VisibleTimeBool[joint] = true;
                             PatternObjectVisible(joint);
