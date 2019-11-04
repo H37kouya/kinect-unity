@@ -127,11 +127,6 @@ public class PatternEffectController : MonoBehaviour
 
             if (VisibleTime[joint] > 5.0f)
             {
-                if (joint == 1)
-                {
-                    Debug.Log("before:" + PatternObject[joint].GetComponent<Renderer>().material.color.a);
-                }
-
                 // FadeOut(joint);
                 if ((PatternObjectColor - FadeSpeedColor).a > 0)
                 {
@@ -142,11 +137,6 @@ public class PatternEffectController : MonoBehaviour
                     PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
                         PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0f
                     );
-                }
-
-                if (joint == 1)
-                {
-                    Debug.Log("after :" + PatternObject[joint].GetComponent<Renderer>().material.color.a);
                 }
 
                 if (PatternObject[joint].GetComponent<Renderer>().material.color.a == 0f)
