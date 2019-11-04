@@ -39,5 +39,10 @@ Description will be added later.
 
 ```
 # すべての変更を破棄してh37kouya/kinect-unity/masterに合わせる
+
 git reset --hard h37kouya/kinect-unity/master
+
+// or
+
+git reset --hard remotes/origin/master
 ```
