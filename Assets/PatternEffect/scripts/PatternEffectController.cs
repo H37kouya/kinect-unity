@@ -31,8 +31,6 @@ public class PatternEffectController : MonoBehaviour
     public float[] VisibleTime;
     public bool[] VisibleTimeBool;
 
-    public FadeAnimation _FadeAnimation;
-
     public float FadeSpeed = 0.01f;
     public Color FadeSpeedColor = new Color(0.01f, 0.01f, 0.01f, 0.01f);
     // if it is saving data to a csv file or not
@@ -68,8 +66,6 @@ public class PatternEffectController : MonoBehaviour
             PatternObjectDisVisible(i);
             VisibleTimeBool[i] = false;
         }
-
-        _FadeAnimation = new FadeAnimation();
 
     }
 
