@@ -38,6 +38,6 @@ Description will be added later.
 ## git operation
 
 ```
-# すべての変更を破棄してorigin/masterに合わせる
-git reset --hard origin/master
+# すべての変更を破棄してh37kouya/kinect-unity/masterに合わせる
+git reset --hard h37kouya/kinect-unity/master
 ```
