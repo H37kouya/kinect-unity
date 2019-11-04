@@ -97,10 +97,10 @@ public class PatternEffectController : MonoBehaviour
                             PatternObjectVisible(joint);
                             PatternObject[joint].transform.position = jointPos;
 
-                            Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
-                            PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
-                                PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0
-                            );
+                            // Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
+                            // PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
+                            //     PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0
+                            // );
                             PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
                                 0, 0, 0, 0
                             );
@@ -119,38 +119,20 @@ public class PatternEffectController : MonoBehaviour
             {
                 VisibleTime[joint] += Time.deltaTime;
 
-                // fade in の実装
-                if (PatternObjectColor.a < 1.0f)
+                if (PatternObject[joint].GetComponent<Renderer>().material.color.a < 1.0f)
                 {
-                    if ((PatternObjectColor + FadeSpeedColor).a > 1.0f)
-                    {
-                        // PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
-                        //     PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 1f
-                        // );
-                        PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
-                            1f, 1f, 1f, 1f
-                        );
-                    }
-                    else
-                    {
-                        PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor + FadeSpeedColor;
-                    }
-
-                    if (joint == 1)
-                    {
-                        Debug.Log("in    :" + PatternObject[joint].GetComponent<Renderer>().material.color.a);
-                    }
+                    FadeIn(joint);
                 }
             }
 
             if (VisibleTime[joint] > 5.0f)
             {
-                // fade out の実装
                 if (joint == 1)
                 {
                     Debug.Log("before:" + PatternObject[joint].GetComponent<Renderer>().material.color.a);
                 }
 
+                // FadeOut(joint);
                 if ((PatternObjectColor - FadeSpeedColor).a < 0)
                 {
                     PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
@@ -216,5 +198,43 @@ public class PatternEffectController : MonoBehaviour
         PatternObject[joint].SetActive(false);
     }
 
+    // fade outの実装
+    // void FadeOut(int joint)
+    // {
+    //     Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
+
+    //     Debug.Log((PatternObjectColor - FadeSpeedColor).a);
+
+    //     if ((PatternObjectColor - FadeSpeedColor).a > 0)
+    //     {
+    //         PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor - FadeSpeedColor;
+    //     }
+    //     else
+    //     {
+    //         PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
+    //             PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0f
+    //         );
+    //     }
+    // }
+
+    // fade in の実装
+    void FadeIn(int joint)
+    {
+        Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
+
+        if ((PatternObjectColor + FadeSpeedColor).a < 1.0f)
+        {
+            PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor + FadeSpeedColor;
+        }
+        else
+        {
+            // PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
+            //     PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 1f
+            // );
+            PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
+                1f, 1f, 1f, 1f
+            );
+        }
+    }
 
 }
