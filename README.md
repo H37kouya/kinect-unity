@@ -6,7 +6,8 @@ Description will be added later.
 
 ## Installation
 
-[download kinect SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
+- [download kinect SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
+- [download kinect ms-sdk](https://assetstore.unity.com/packages/tools/kinect-with-ms-sdk-7747)
 
 ## documentation
 
