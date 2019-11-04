@@ -1256,7 +1256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1588306308}
-  - component: {fileID: 1588306307}
+  - component: {fileID: 1588306309}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1264,32 +1264,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1588306307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588306306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f42db88ecdc045e4e8718e3eb5f12336, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outputPositions: []
-  Cube0: {fileID: 607276926}
-  Sphere: {fileID: 640826698}
-  Cube1: {fileID: 653612811}
-  Cube2: {fileID: 396291315}
-  Cube3: {fileID: 1518671653}
-  Cube4: {fileID: 650650725}
-  Cube5: {fileID: 435181512}
-  Cube6: {fileID: 1395662337}
-  Cube7: {fileID: 1515500902}
-  Cube8: {fileID: 495193139}
-  PatternObject: []
-  VisibleTime: []
-  VisibleTimeBool: 
 --- !u!4 &1588306308
 Transform:
   m_ObjectHideFlags: 0
@@ -1314,3 +1288,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1588306309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588306306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c36a4d46fc522499f376c5ffee57d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputPositions: []
+  Cube0: {fileID: 607276926}
+  Sphere: {fileID: 640826698}
+  Cube1: {fileID: 653612811}
+  Cube2: {fileID: 396291315}
+  Cube3: {fileID: 1518671653}
+  Cube4: {fileID: 650650725}
+  Cube5: {fileID: 435181512}
+  Cube6: {fileID: 1395662337}
+  Cube7: {fileID: 1515500902}
+  Cube8: {fileID: 495193139}
+  PatternObject: []
+  VisibleTime: []
+  VisibleTimeBool: 
