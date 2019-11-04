@@ -4,6 +4,10 @@
 
 Description will be added later.
 
+## Installation
+
+[download kinect SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
+
 ## documentation
 
 ### Joint Name and Number
@@ -30,3 +34,10 @@ Description will be added later.
 |  17 |  Knee_Right  | 右ひざ |
 |  18 |  Ankle_Right  | 右足首 |
 |  19 |  Foot_Right  | 右足 |
+
+## git operation
+
+```
+# すべての変更を破棄してorigin/masterに合わせる
+git reset --hard origin/master
+```
