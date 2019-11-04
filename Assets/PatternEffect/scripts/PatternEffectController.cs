@@ -58,8 +58,6 @@ public class PatternEffectController : MonoBehaviour
         for (int i = 0; i < PatternObject.Length; i++)
         {
             PatternObjectDisVisible(i);
-            // outputPositions[i] = new Vector3();
-            // VisibleTime[i] = 0.0f;
             VisibleTimeBool[i] = false;
         }
 
@@ -86,7 +84,6 @@ public class PatternEffectController : MonoBehaviour
 
                         if (!EqualVector3(jointPos, PatternObject[joint].transform.position))
                         {
-                            // jointPos.x *= 15.0f;
                             jointPos.x = 20 * Mathf.Pow(jointPos.x, 3); // 通常使用で発散しないギリギリライン
                             VisibleTime[joint] = 0.0f;
                             VisibleTimeBool[joint] = true;
