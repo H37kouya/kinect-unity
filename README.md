@@ -6,7 +6,8 @@ Description will be added later.
 
 ## Installation
 
-[download kinect SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
+- [download kinect SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
+- [download kinect ms-sdk](https://assetstore.unity.com/packages/tools/kinect-with-ms-sdk-7747)
 
 ## documentation
 
@@ -39,5 +40,10 @@ Description will be added later.
 
 ```
 # すべての変更を破棄してh37kouya/kinect-unity/masterに合わせる
+
 git reset --hard h37kouya/kinect-unity/master
+
+// or
+
+git reset --hard remotes/origin/master
 ```
