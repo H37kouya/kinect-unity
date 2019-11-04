@@ -133,15 +133,15 @@ public class PatternEffectController : MonoBehaviour
                 }
 
                 // FadeOut(joint);
-                if ((PatternObjectColor - FadeSpeedColor).a < 0)
+                if ((PatternObjectColor - FadeSpeedColor).a > 0)
+                {
+                    PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor - FadeSpeedColor;
+                }
+                else
                 {
                     PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
                         PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0f
                     );
-                }
-                else
-                {
-                    PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor - FadeSpeedColor;
                 }
 
                 if (joint == 1)
