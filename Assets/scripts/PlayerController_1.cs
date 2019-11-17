@@ -29,10 +29,7 @@ public class PlayerController_1 : MonoBehaviour
         var moveVertical = Input.GetAxis("Vertical");
 
         //// カーソルキーの入力に合わせて移動方向を設定
-        //var movement = new Vector3(moveHorizontal, 0, moveVertical);
-
-        //// Ridigbody に力を与えて玉を動かす
-        //rb.AddForce(movement * speed);
+       
         if (Input.GetKey(KeyCode.UpArrow))
         {
             transform.Rotate(50 * Time.deltaTime, 0, 0);
@@ -50,7 +47,7 @@ public class PlayerController_1 : MonoBehaviour
             transform.Rotate(0, 0, 50 * Time.deltaTime);
         }
     }
-
+    
     // 玉が他のオブジェクトにぶつかった時に呼び出される
     void OnTriggerEnter(Collider other)
     {
@@ -82,3 +79,5 @@ public class PlayerController_1 : MonoBehaviour
         }
     }
 }
+
+
