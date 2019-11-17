@@ -25,6 +25,18 @@ public class PatternEffectController : MonoBehaviour
     public GameObject Cube6;
     public GameObject Cube7;
     public GameObject Cube8;
+    public GameObject Cube9;
+    public GameObject Sphere10;
+    public GameObject Capsule11;
+    public GameObject Cylinder12;
+    public GameObject Sphere13;
+    public GameObject Capsule14;
+    public GameObject Cylinder15;
+    public GameObject Tree16;
+    public GameObject Cube17;
+    public GameObject Cube18;
+    public GameObject Cube19;
+
 
     public GameObject[] PatternObject;
 
@@ -51,8 +63,9 @@ public class PatternEffectController : MonoBehaviour
         PatternObject = new GameObject[] {
             Cube0, Sphere, Cube1, Cube2, // 0 - 3
             Cube3, Cube4, Cube5, Cube6, // 4 - 7
-            Cube7, Cube8 // 8 - 11 
-// 12 - 15
+            Cube7, Cube8, Cube9, Sphere10, // 8 - 11 
+            Cylinder12, Sphere13, Capsule14, Cylinder15,// 12 - 15
+            Tree16, Cube17, Cube18, Cube19,// 16 - 19
         };
 
         // 配列の初期化 領域の確保
