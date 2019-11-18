@@ -233,6 +233,16 @@ public class PlayerControll_2 : MonoBehaviour
                         Debug.Log(playerposfirst);
                         CalledOnce = true;
                     }
+
+                    //player落下検出初期位置戻る
+                    Vector3 playerpos = Player.gameObject.transform.position;
+                    if(Player.gameObject.transform.position.y < -50)
+                    {
+                        playerpos = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
+                        Player.gameObject.transform.position = playerpos;
+                    }
+
+
                 }
                 else
                 {
