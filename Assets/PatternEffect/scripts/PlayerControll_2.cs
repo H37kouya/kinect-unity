@@ -41,7 +41,7 @@ public class PlayerControll_2 : MonoBehaviour
     public GameObject Foot_Right;
 
     // add new Cube
-    public GameObject Cube;
+   
 
     public LineRenderer SkeletonLine;
 
@@ -95,9 +95,7 @@ public class PlayerControll_2 : MonoBehaviour
         };
 
         // new setup cubes
-        cubes = new GameObject[] {
-            Cube
-        };
+       
 
         // array holding the skeleton lines
         lines = new LineRenderer[bones.Length];
@@ -147,6 +145,8 @@ public class PlayerControll_2 : MonoBehaviour
         //ここからkinect関係
         KinectManager manager = KinectManager.Instance;
 
+        Debug.Log(manager.IsInitialized());
+
         // get 1st player
         uint playerID = manager != null ? manager.GetPlayer1ID() : 0;
 
@@ -179,11 +179,7 @@ public class PlayerControll_2 : MonoBehaviour
                 }
             }
 
-            cubes[0].gameObject.SetActive(true);
-            cubes[0].transform.localPosition = Vector3.zero;
-            cubes[0].transform.localRotation = Quaternion.identity;
-            cubes[0].GetComponent<Renderer>().material.color = Color.clear;
-
+           
 
 
         }
@@ -211,10 +207,7 @@ public class PlayerControll_2 : MonoBehaviour
                 if (manager.IsJointTracked(playerID, joint))
                 {
                     bones[i].gameObject.SetActive(true);
-                    cubes[0].gameObject.SetActive(true);
-                    cubes[0].transform.localPosition = Vector3.zero;
-                    cubes[0].transform.localRotation = Quaternion.identity;
-                    cubes[0].GetComponent<Renderer>().material.color = Color.clear;
+                   
 
 
                     Vector3 posJoint = manager.GetJointPosition(playerID, joint);
