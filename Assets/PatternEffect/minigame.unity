@@ -1215,7 +1215,7 @@ GameObject:
   - component: {fileID: 470428555}
   - component: {fileID: 470428554}
   m_Layer: 5
-  m_Name: Win Text
+  m_Name: Time Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1237,7 +1237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -330, y: 100}
+  m_AnchoredPosition: {x: 567, y: 475}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &470428554
@@ -1253,7 +1253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9528302, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1262,7 +1262,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 300
+    m_FontSize: 200
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2942,7 +2942,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1386141685}
   - component: {fileID: 1386141684}
-  - component: {fileID: 1386141686}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -2962,8 +2961,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084d13cbd2288f14487dfaf907e49505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nowTime: 100
   scoreText: {fileID: 492376021}
-  winText: {fileID: 470428554}
+  timeText: {fileID: 470428554}
   MoveVertically: 0
   MirroredMovement: 0
   Hip_Center: {fileID: 697168563}
@@ -3022,42 +3022,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1386141686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386141683}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f828727d4cfb7a4b8984b4e0310ae67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveVertically: 0
-  MirroredMovement: 0
-  Hip_Center: {fileID: 0}
-  Spine: {fileID: 673939447}
-  Shoulder_Center: {fileID: 0}
-  Head: {fileID: 0}
-  Shoulder_Left: {fileID: 0}
-  Elbow_Left: {fileID: 0}
-  Wrist_Left: {fileID: 0}
-  Hand_Left: {fileID: 0}
-  Shoulder_Right: {fileID: 0}
-  Elbow_Right: {fileID: 0}
-  Wrist_Right: {fileID: 0}
-  Hand_Right: {fileID: 0}
-  Hip_Left: {fileID: 0}
-  Knee_Left: {fileID: 0}
-  Ankle_Left: {fileID: 0}
-  Foot_Left: {fileID: 0}
-  Hip_Right: {fileID: 0}
-  Knee_Right: {fileID: 0}
-  Ankle_Right: {fileID: 0}
-  Foot_Right: {fileID: 0}
-  Cube: {fileID: 1588704559}
-  SkeletonLine: {fileID: 0}
 --- !u!1 &1402090278
 GameObject:
   m_ObjectHideFlags: 0

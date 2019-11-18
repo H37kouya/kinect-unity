@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerControll_2 : MonoBehaviour
 {
 
-    //public float speed; // 動く速さ
+    public float nowTime; //タイム
     public Text scoreText; // スコアの UI
-    public Text winText; // リザルトの UI
+    public Text timeText; // タイムの UI
 
     //private Rigidbody rb; // Rididbody
     private int score; // スコア
@@ -73,15 +74,13 @@ public class PlayerControll_2 : MonoBehaviour
         // UI を初期化
         score = 0;
         SetCountText();
-        winText.text = "";
+        timeText.text = "";
+
+
+       
 
         //最初player非表示
         Player.gameObject.SetActive(false);
-
-        //for (int i = 0; i < 100; i++)
-        //{
-        //    Debug.Log("Debug Start" + i);
-        //}
 
         //store bones in a list for easier access
         bones = new GameObject[] {
@@ -224,9 +223,10 @@ public class PlayerControll_2 : MonoBehaviour
                     bones[i].transform.localPosition = posJoint * 20.0f;
                     bones[i].transform.rotation = rotJoint;
 
+                    //player初期座標設定
                     if (!CalledOnce && bones[1].transform.localPosition != new Vector3(0, 0, 0))
                     {
-                        //player初期座標設定
+                        
                         Vector3 playerposfirst = Player.gameObject.transform.position;
                         playerposfirst = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
                         Player.gameObject.transform.position = playerposfirst;
@@ -242,6 +242,18 @@ public class PlayerControll_2 : MonoBehaviour
                         Player.gameObject.transform.position = playerpos;
                     }
 
+                    //タイマー
+                    if(bones[1].transform.localPosition != new Vector3(0, 0, 0))
+                    {
+                        nowTime -= Time.deltaTime/10;
+                    }
+                    timeText.text = nowTime.ToString("F0");
+
+                    //時間制限
+                    if (nowTime < 0)
+                    {
+                        SceneManager.LoadScene("Result");
+                    }
 
                 }
                 else
@@ -271,17 +283,19 @@ public class PlayerControll_2 : MonoBehaviour
         }
     }
 
-    // UI の表示を更新する
+    // UI の表示を更新する(ぶつかったとき）
     void SetCountText()
     {
         // スコアの表示を更新
         scoreText.text = "Count: " + score.ToString();
+       
+
+       
 
         // すべての収集アイテムを獲得した場合
         if (score >= 12)
         {
-            // リザルトの表示を更新
-            winText.text = "You Win!";
+            SceneManager.LoadScene("Result");
         }
     }
 }
