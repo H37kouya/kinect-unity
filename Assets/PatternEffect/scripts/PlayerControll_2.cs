@@ -15,8 +15,6 @@ public class PlayerControll_2 : MonoBehaviour
     public bool MoveVertically = false;
     public bool MirroredMovement = false;
 
-   
-
     //public GameObject debugText;
 
     public GameObject Hip_Center;
@@ -40,17 +38,11 @@ public class PlayerControll_2 : MonoBehaviour
     public GameObject Ankle_Right;
     public GameObject Foot_Right;
 
-    // add new Cube
-    public GameObject Cube;
-
     public LineRenderer SkeletonLine;
 
     private GameObject[] bones;
     private LineRenderer[] lines;
     private int[] parIdxs;
-
-    // add new Cube
-    private GameObject[] cubes;
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -92,11 +84,6 @@ public class PlayerControll_2 : MonoBehaviour
             2, 8, 9, 10,
             0, 12, 13, 14,
             0, 16, 17, 18
-        };
-
-        // new setup cubes
-        cubes = new GameObject[] {
-            Cube
         };
 
         // array holding the skeleton lines
@@ -178,14 +165,6 @@ public class PlayerControll_2 : MonoBehaviour
                     lines[i].gameObject.SetActive(false);
                 }
             }
-
-            cubes[0].gameObject.SetActive(true);
-            cubes[0].transform.localPosition = Vector3.zero;
-            cubes[0].transform.localRotation = Quaternion.identity;
-            cubes[0].GetComponent<Renderer>().material.color = Color.clear;
-
-
-
         }
 
         // set the user position in space
@@ -211,11 +190,6 @@ public class PlayerControll_2 : MonoBehaviour
                 if (manager.IsJointTracked(playerID, joint))
                 {
                     bones[i].gameObject.SetActive(true);
-                    cubes[0].gameObject.SetActive(true);
-                    cubes[0].transform.localPosition = Vector3.zero;
-                    cubes[0].transform.localRotation = Quaternion.identity;
-                    cubes[0].GetComponent<Renderer>().material.color = Color.clear;
-
 
                     Vector3 posJoint = manager.GetJointPosition(playerID, joint);
                     posJoint.z = !MirroredMovement ? -posJoint.z : posJoint.z;
