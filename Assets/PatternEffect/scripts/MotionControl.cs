@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine.UI;
-public class PatternEffectController : MonoBehaviour
+public class MotionControl : MonoBehaviour
 {
     // the joint we want to track
     // public KinectWrapper.NuiSkeletonPositionIndex joint = KinectWrapper.NuiSkeletonPositionIndex.HandRight;

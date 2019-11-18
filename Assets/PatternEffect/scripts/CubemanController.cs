@@ -47,6 +47,12 @@ public class CubemanController : MonoBehaviour
     private Quaternion initialRotation;
     private Vector3 initialPosOffset = Vector3.zero;
     private uint initialPosUserID = 0;
+    private Quaternion rotation;
+
+    public CubemanController(Quaternion rotation)
+    {
+        this.rotation = rotation;
+    }
 
     // private TimerBusiness Timer;
 
@@ -141,7 +147,7 @@ public class CubemanController : MonoBehaviour
             cubes[0].GetComponent<Renderer>().material.color = Color.clear;
 
 
-            return;
+
         }
 
         // set the user position in space
@@ -187,107 +193,113 @@ public class CubemanController : MonoBehaviour
                         posJoint.z = -posJoint.z;
                     }
 
-                    bones[i].transform.localPosition = posJoint;
+                    bones[i].transform.localPosition = posJoint * 20.0f;
                     bones[i].transform.rotation = rotJoint;
                 }
                 else
                 {
                     bones[i].gameObject.SetActive(false);
                 }
+
             }
         }
-
-        if (SkeletonLine)
-        {
-            // オブジェクトの個数回回している
-            for (int i = 0; i < bones.Length; i++)
-            {
-                bool bLineDrawn = false;
-
-                if (bones[i] != null)
-                {
-                    if (bones[i].gameObject.activeSelf)
-                    {
-                        Vector3 posJoint = bones[i].transform.position;
-
-                        int parI = parIdxs[i];
-                        Vector3 posParent = bones[parI].transform.position;
-
-                        Vector3 posLocalJoint = bones[i].transform.localPosition;
-                        Vector3 posLocalParent = bones[parI].transform.localPosition;
-
-                        if (bones[parI].gameObject.activeSelf)
-                        {
-                            lines[i].gameObject.SetActive(true);
-
-                            if (i == 7)
-                            {
-                                float ty = (posLocalJoint.y <= 0) ? posLocalJoint.y : posLocalJoint.y * 4.0f;
-                                cubes[0].transform.position = new Vector3(
-                                    posLocalJoint.x * 7,
-                                    ty,
-                                    posLocalJoint.z
-                                );
-                            }
-
-                            if (i == 0)
-                            {
-                                cubes[0].GetComponent<Renderer>().material.color = Color.red;
-                            }
-                            else if (i == 1 || i == 8 || i == 16)
-                            {
-                                cubes[0].GetComponent<Renderer>().material.color = Color.black;
-                            }
-                            else if (i == 2 || i == 9 || i == 17)
-                            {
-                                cubes[0].GetComponent<Renderer>().material.color = Color.blue;
-                            }
-                            else if (i == 3 || i == 10 || i == 19)
-                            {
-                                cubes[0].GetComponent<Renderer>().material.color = Color.green;
-                            }
-                            else if (i == 4 || i == 11 || i == 18)
-                            {
-                                cubes[0].GetComponent<Renderer>().material.color = Color.cyan;
-                            }
-                            else if (i == 5 || i == 12 || i == 15)
-                            {
-                                cubes[0].GetComponent<Renderer>().material.color = Color.yellow;
-                            }
-                            else if (i == 6 || i == 13)
-                            {
-                                cubes[0].GetComponent<Renderer>().material.color = Color.magenta;
-                            }
-                            else if (i == 7 || i == 14)
-                            {
-                                cubes[0].GetComponent<Renderer>().material.color = Color.clear;
-                            }
-
-                            // Debug.Log(posParent.ToString()); // 座標 (x, y, z)
-                            // Debug.Log(bones[i].ToString()); // バグる
-                            // Debug.Log(posParent.GetType()); // オブジェクトの型の名前
-                            // Debug.Log(bones[i].name); // オブジェクトの名前 ファイル名?
-                            // Debug.Log(bones[i].GetType()); // return GameObject only
-                            // Debug.Log(i); // wait for moveのときactiveSelf内に入ってこない
-
-                            //lines[i].SetVertexCount(2);
-
-                            lines[i].SetPosition(0, posParent);
-                            lines[i].SetPosition(1, posJoint);
-
-                            bLineDrawn = true;
-
-
-                        }
-                    }
-                }
-
-                if (!bLineDrawn)
-                {
-                    lines[i].gameObject.SetActive(false);
-                }
-            }
-        }
-
     }
-}
+
+   
+
+        //if (SkeletonLine)
+        //{
+        //    // オブジェクトの個数回回している
+        //    for (int i = 0; i < bones.Length; i++)
+        //    {
+        //        bool bLineDrawn = false;
+
+        //        if (bones[i] != null)
+        //        {
+        //            if (bones[i].gameObject.activeSelf)
+        //            {
+        //                Vector3 posJoint = bones[i].transform.position;
+
+        //                int parI = parIdxs[i];
+        //                Vector3 posParent = bones[parI].transform.position;
+
+        //                Vector3 posLocalJoint = bones[i].transform.localPosition;
+        //                Vector3 posLocalParent = bones[parI].transform.localPosition;
+
+        //                if (bones[parI].gameObject.activeSelf)
+        //                {
+        //                    lines[i].gameObject.SetActive(true);
+
+        //                    for (i = 0; i < 20; i++)
+        //                    {
+        //                        //float ty = (posLocalJoint.y <= 0) ? posLocalJoint.y : posLocalJoint.y * 4.0f;
+        //                        //cubes[i].transform.position = new Vector3(
+        //                        //    posLocalJoint.x * 20.0f,
+        //                        //    posLocalJoint.y * 20.0f,
+        //                        //    posLocalJoint.z
+        //                        //);
+
+
+
+        //                        if (i == 5)
+        //                        {
+        //                            Debug.Log(cubes[5].transform.position.x);
+        //                        }
+        //                        //else if (i == 1 || i == 8 || i == 16)
+        //                        //{
+        //                        //    cubes[0].GetComponent<Renderer>().material.color = Color.black;
+        //                        //}
+        //                        //else if (i == 2 || i == 9 || i == 17)
+        //                        //{
+        //                        //    cubes[0].GetComponent<Renderer>().material.color = Color.blue;
+        //                        //}
+        //                        //else if (i == 3 || i == 10 || i == 19)
+        //                        //{
+        //                        //    cubes[0].GetComponent<Renderer>().material.color = Color.green;
+        //                        //}
+        //                        //else if (i == 4 || i == 11 || i == 18)
+        //                        //{
+        //                        //    cubes[0].GetComponent<Renderer>().material.color = Color.cyan;
+        //                        //}
+        //                        //else if (i == 5 || i == 12 || i == 15)
+        //                        //{
+        //                        //    cubes[0].GetComponent<Renderer>().material.color = Color.yellow;
+        //                        //}
+        //                        //else if (i == 6 || i == 13)
+        //                        //{
+        //                        //    cubes[0].GetComponent<Renderer>().material.color = Color.magenta;
+        //                        //}
+        //                        //else if (i == 7 || i == 14)
+        //                        //{
+        //                        //    cubes[0].GetComponent<Renderer>().material.color = Color.clear;
+        //                        //}
+
+        //                        // Debug.Log(posParent.ToString()); // 座標 (x, y, z)
+        //                        // Debug.Log(bones[i].ToString()); // バグる
+        //                        // Debug.Log(posParent.GetType()); // オブジェクトの型の名前
+        //                        // Debug.Log(bones[i].name); // オブジェクトの名前 ファイル名?
+        //                        // Debug.Log(bones[i].GetType()); // return GameObject only
+        //                        // Debug.Log(i); // wait for moveのときactiveSelf内に入ってこない
+
+        //                        //lines[i].SetVertexCount(2);
+
+        //                        lines[i].SetPosition(0, posParent);
+        //                        lines[i].SetPosition(1, posJoint);
+
+        //                        bLineDrawn = true;
+
+
+        //                    }
+        //                }
+        //            }
+
+        //            if (!bLineDrawn)
+        //            {
+        //                lines[i].gameObject.SetActive(false);
+        //            }
+        //        }
+        //    }
+
+        //}
+    }
+
