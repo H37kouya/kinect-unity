@@ -15,7 +15,7 @@ public class PlayerControll_2 : MonoBehaviour
     public bool MoveVertically = false;
     public bool MirroredMovement = false;
 
-   
+
 
     //public GameObject debugText;
 
@@ -39,9 +39,10 @@ public class PlayerControll_2 : MonoBehaviour
     public GameObject Knee_Right;
     public GameObject Ankle_Right;
     public GameObject Foot_Right;
+    public GameObject Player;
 
-    // add new Cube
-   
+    // player取得
+    //GameObject player = GameObject.Find("player");
 
     public LineRenderer SkeletonLine;
 
@@ -50,7 +51,7 @@ public class PlayerControll_2 : MonoBehaviour
     private int[] parIdxs;
 
     // add new Cube
-    private GameObject[] cubes;
+    
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -63,20 +64,25 @@ public class PlayerControll_2 : MonoBehaviour
         this.rotation = rotation;
     }
 
+    
+
     void Start()
     {
-        // Rigidbody を取得
-        //rb = GetComponent<Rigidbody>();
+       
 
         // UI を初期化
         score = 0;
         SetCountText();
         winText.text = "";
 
-        for (int i = 0; i < 100; i++)
-        {
-            Debug.Log("Debug Start" + i);
-        }
+        //最初player非表示
+        Player.gameObject.SetActive(false);
+
+        //for (int i = 0; i < 100; i++)
+        //{
+        //    Debug.Log("Debug Start" + i);
+        //}
+
         //store bones in a list for easier access
         bones = new GameObject[] {
             Hip_Center, Spine, Shoulder_Center, Head,  // 0 - 3
@@ -115,37 +121,16 @@ public class PlayerControll_2 : MonoBehaviour
         initialPosition = transform.position;
         initialRotation = transform.rotation;
     }
+    //updateで1回のみ呼び出すフラグ
+    bool CalledOnce = false;
 
     void Update()
     {
-        // カーソルキーの入力を取得
-        var moveHorizontal = Input.GetAxis("Horizontal");
-        var moveVertical = Input.GetAxis("Vertical");
-
-        //// カーソルキーの入力に合わせて移動方向を設定
        
-        //if (Input.GetKey(KeyCode.UpArrow))
-        //{
-        //    transform.Rotate(50 * Time.deltaTime, 0, 0);
-        //}
-        //if (Input.GetKey(KeyCode.DownArrow))
-        //{
-        //    transform.Rotate(-50 * Time.deltaTime, 0, 0);
-        //}
-        //if (Input.GetKey(KeyCode.RightArrow))
-        //{
-        //    transform.Rotate(0, 0, -50 * Time.deltaTime);
-        //}
-        //if (Input.GetKey(KeyCode.LeftArrow))
-        //{
-        //    transform.Rotate(0, 0, 50 * Time.deltaTime);
-        //}
-
-
         //ここからkinect関係
         KinectManager manager = KinectManager.Instance;
 
-        Debug.Log(manager.IsInitialized());
+       
 
         // get 1st player
         uint playerID = manager != null ? manager.GetPlayer1ID() : 0;
@@ -168,10 +153,16 @@ public class PlayerControll_2 : MonoBehaviour
 
             for (int i = 0; i < bones.Length; i++)
             {
+                //表示させないと座標と回転軸を初期化できないと思われる
                 bones[i].gameObject.SetActive(true);
-
                 bones[i].transform.localPosition = Vector3.zero;
                 bones[i].transform.localRotation = Quaternion.identity;
+
+                //ステージ以外透明
+                if (i != 1)
+                {
+                    bones[i].GetComponent<Renderer>().material.color = Color.clear;
+                }
 
                 if (SkeletonLine)
                 {
@@ -180,7 +171,6 @@ public class PlayerControll_2 : MonoBehaviour
             }
 
            
-
 
         }
 
@@ -207,8 +197,8 @@ public class PlayerControll_2 : MonoBehaviour
                 if (manager.IsJointTracked(playerID, joint))
                 {
                     bones[i].gameObject.SetActive(true);
-                   
-
+                    Player.gameObject.SetActive(true);
+                    
 
                     Vector3 posJoint = manager.GetJointPosition(playerID, joint);
                     posJoint.z = !MirroredMovement ? -posJoint.z : posJoint.z;
@@ -224,12 +214,30 @@ public class PlayerControll_2 : MonoBehaviour
                         posJoint.z = -posJoint.z;
                     }
 
+                    //ステージ以外透明
+                    if (i != 1)
+                    {
+                        bones[i].GetComponent<Renderer>().material.color = Color.clear;
+                    }
+
+                    //unity座標適正化(20倍)
                     bones[i].transform.localPosition = posJoint * 20.0f;
                     bones[i].transform.rotation = rotJoint;
+
+                    if (!CalledOnce && bones[1].transform.localPosition != new Vector3(0, 0, 0))
+                    {
+                        //player初期座標設定
+                        Vector3 playerposfirst = Player.gameObject.transform.position;
+                        playerposfirst = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
+                        Player.gameObject.transform.position = playerposfirst;
+                        Debug.Log(playerposfirst);
+                        CalledOnce = true;
+                    }
                 }
                 else
                 {
                     bones[i].gameObject.SetActive(false);
+                    
                 }
 
             }
