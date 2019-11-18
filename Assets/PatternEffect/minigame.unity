@@ -2961,6 +2961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084d13cbd2288f14487dfaf907e49505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstTime: 100
   nowTime: 100
   scoreText: {fileID: 492376021}
   timeText: {fileID: 470428554}

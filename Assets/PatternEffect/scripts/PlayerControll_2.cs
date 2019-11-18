@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControll_2 : MonoBehaviour
 {
-
+    public float firstTime;//初期タイム(タイムと同じ。初期タイム取り方わからん...)
     public float nowTime; //タイム
     public Text scoreText; // スコアの UI
     public Text timeText; // タイムの UI
@@ -69,7 +69,7 @@ public class PlayerControll_2 : MonoBehaviour
 
     void Start()
     {
-       
+        float firstTime = nowTime;
 
         // UI を初期化
         score = 0;
@@ -128,8 +128,6 @@ public class PlayerControll_2 : MonoBehaviour
        
         //ここからkinect関係
         KinectManager manager = KinectManager.Instance;
-
-       
 
         // get 1st player
         uint playerID = manager != null ? manager.GetPlayer1ID() : 0;
@@ -232,6 +230,8 @@ public class PlayerControll_2 : MonoBehaviour
                         Player.gameObject.transform.position = playerposfirst;
                         Debug.Log(playerposfirst);
                         CalledOnce = true;
+
+                        
                     }
 
                     //player落下検出初期位置戻る
@@ -242,17 +242,19 @@ public class PlayerControll_2 : MonoBehaviour
                         Player.gameObject.transform.position = playerpos;
                     }
 
-                    //タイマー
+                    //タイマー(認識したらスタート)
                     if(bones[1].transform.localPosition != new Vector3(0, 0, 0))
                     {
                         nowTime -= Time.deltaTime/10;
                     }
                     timeText.text = nowTime.ToString("F0");
 
-                    //時間制限
+                    //時間制限でシーン切り替え
                     if (nowTime < 0)
                     {
-                        SceneManager.LoadScene("Result");
+                        
+                        GameOver("Game Over", "Score" + score.ToString());
+                        
                     }
 
                 }
@@ -288,14 +290,23 @@ public class PlayerControll_2 : MonoBehaviour
     {
         // スコアの表示を更新
         scoreText.text = "Count: " + score.ToString();
-       
 
+        Debug.Log(score);
        
 
         // すべての収集アイテムを獲得した場合
-        if (score >= 12)
+        if (score >= 1)
         {
-            SceneManager.LoadScene("Result");
+            nowTime = firstTime - nowTime;
+            GameOver(nowTime.ToString() + "秒でクリア!", "Score:12");
         }
     }
+
+    public void GameOver(string resultMessage, string scoreMessage)
+    {  
+        DataSender.resultMessage = resultMessage;  //受け取った引数をstatic変数へ格納
+        DataSender.scoreMessage = scoreMessage;
+        SceneManager.LoadScene("Result");
+    }
+
 }
