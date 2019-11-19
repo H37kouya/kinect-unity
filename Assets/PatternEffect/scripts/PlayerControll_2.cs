@@ -200,7 +200,7 @@ public class PlayerControll_2 : MonoBehaviour
                     //認識して5秒経ったらtrue
                     if (CalledOnce2)
                     {
-                        
+
                         bones[i].gameObject.SetActive(true);
                         Player.gameObject.SetActive(true);
 
@@ -271,7 +271,7 @@ public class PlayerControll_2 : MonoBehaviour
                     }
 
                 }
-                
+
 
             }
         }
@@ -281,7 +281,7 @@ public class PlayerControll_2 : MonoBehaviour
         {
             nowTime -= Time.deltaTime;
         }
-        
+
         if (CalledOnce2)
         {
             timeText.text = nowTime.ToString("F0");
@@ -291,7 +291,7 @@ public class PlayerControll_2 : MonoBehaviour
             float waittime = nowTime - (firstTime - 5);
             timeText.text = waittime.ToString("F0");
 
-            if(waittime < 0)
+            if (waittime < 0)
             {
                 nowTime = firstTime;
                 CalledOnce2 = true;//フラグ
