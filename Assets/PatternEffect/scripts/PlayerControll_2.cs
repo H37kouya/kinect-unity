@@ -263,6 +263,12 @@ public class PlayerControll_2 : MonoBehaviour
                 else
                 {
                     bones[i].gameObject.SetActive(false);
+                    //人いなくなったら初期化(びみょい）
+                    if (!bones[1].gameObject.active)
+                    {
+                        CalledOnce = false;
+                        CalledOnce2 = false;
+                    }
 
                 }
                 
