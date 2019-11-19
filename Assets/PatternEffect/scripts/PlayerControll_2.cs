@@ -271,6 +271,7 @@ public class PlayerControll_2 : MonoBehaviour
     // 玉が他のオブジェクトにぶつかった時に呼び出される
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         // ぶつかったオブジェクトが収集アイテムだった場合
         if (other.gameObject.CompareTag("Pick up"))
         {
@@ -279,7 +280,7 @@ public class PlayerControll_2 : MonoBehaviour
 
             // スコアを加算します
             score = score + 1;
-
+           
             // UI の表示を更新します
             SetCountText();
         }
@@ -288,14 +289,15 @@ public class PlayerControll_2 : MonoBehaviour
     // UI の表示を更新する(ぶつかったとき）
     void SetCountText()
     {
+        int st = score;
         // スコアの表示を更新
-        scoreText.text = "Count: " + score.ToString();
+        scoreText.text = "Count:"+ st.ToString();
 
-        Debug.Log(score);
        
 
+
         // すべての収集アイテムを獲得した場合
-        if (score >= 1)
+        if (score >= 12)
         {
             nowTime = firstTime - nowTime;
             GameOver(nowTime.ToString() + "秒でクリア!", "Score:12");
