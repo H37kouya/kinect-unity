@@ -52,7 +52,7 @@ public class PlayerControll_2 : MonoBehaviour
     private int[] parIdxs;
 
     // add new Cube
-    
+
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -65,7 +65,7 @@ public class PlayerControll_2 : MonoBehaviour
         this.rotation = rotation;
     }
 
-    
+
 
     void Start()
     {
@@ -77,7 +77,7 @@ public class PlayerControll_2 : MonoBehaviour
         timeText.text = "";
 
 
-       
+
 
         //最初player非表示
         Player.gameObject.SetActive(false);
@@ -100,7 +100,7 @@ public class PlayerControll_2 : MonoBehaviour
         };
 
         // new setup cubes
-       
+
 
         // array holding the skeleton lines
         lines = new LineRenderer[bones.Length];
@@ -122,10 +122,11 @@ public class PlayerControll_2 : MonoBehaviour
     }
     //updateで1回のみ呼び出すフラグ
     bool CalledOnce = false;
+    bool CalledOnce2 = false;
 
     void Update()
     {
-       
+
         //ここからkinect関係
         KinectManager manager = KinectManager.Instance;
 
@@ -167,7 +168,7 @@ public class PlayerControll_2 : MonoBehaviour
                 }
             }
 
-           
+
 
         }
 
@@ -187,78 +188,84 @@ public class PlayerControll_2 : MonoBehaviour
         // update the local positions of the bones
         for (int i = 0; i < bones.Length; i++)
         {
-            
+
             if (bones[i] != null)
             {
                 int joint = MirroredMovement ? KinectWrapper.GetSkeletonMirroredJoint(i) : i;
 
                 if (manager.IsJointTracked(playerID, joint))
                 {
-                    bones[i].gameObject.SetActive(true);
-                    Player.gameObject.SetActive(true);
-                    
+                    CalledOnce = true;//フラグ
 
-                    Vector3 posJoint = manager.GetJointPosition(playerID, joint);
-                    posJoint.z = !MirroredMovement ? -posJoint.z : posJoint.z;
-
-                    Quaternion rotJoint = manager.GetJointOrientation(playerID, joint, !MirroredMovement);
-                    rotJoint = initialRotation * rotJoint;
-
-                    posJoint -= posPointMan;
-
-                    if (MirroredMovement)
-                    {
-                        posJoint.x = -posJoint.x;
-                        posJoint.z = -posJoint.z;
-                    }
-
-                    //ステージ以外透明
-                    if (i != 1)
-                    {
-                        bones[i].GetComponent<Renderer>().material.color = Color.clear;
-                    }
-
-                    //unity座標適正化(20倍)
-                    bones[i].transform.localPosition = posJoint * 20.0f;
-                    bones[i].transform.rotation = rotJoint;
-
-                    //player初期座標設定
-                    if (!CalledOnce && bones[1].transform.localPosition != new Vector3(0, 0, 0))
+                    //認識して5秒経ったらtrue
+                    if (CalledOnce2)
                     {
                         
-                        Vector3 playerposfirst = Player.gameObject.transform.position;
-                        playerposfirst = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
-                        Player.gameObject.transform.position = playerposfirst;
-                        Debug.Log(playerposfirst);
-                        CalledOnce = true;
+                        bones[i].gameObject.SetActive(true);
+                        Player.gameObject.SetActive(true);
 
-                        
+
+                        Vector3 posJoint = manager.GetJointPosition(playerID, joint);
+                        posJoint.z = !MirroredMovement ? -posJoint.z : posJoint.z;
+
+                        Quaternion rotJoint = manager.GetJointOrientation(playerID, joint, !MirroredMovement);
+                        rotJoint = initialRotation * rotJoint;
+
+                        posJoint -= posPointMan;
+
+                        if (MirroredMovement)
+                        {
+                            posJoint.x = -posJoint.x;
+                            posJoint.z = -posJoint.z;
+                        }
+
+                        //ステージ以外透明
+                        if (i != 1)
+                        {
+                            bones[i].GetComponent<Renderer>().material.color = Color.clear;
+                        }
+
+                        //unity座標適正化(20倍)
+                        bones[i].transform.localPosition = posJoint * 20.0f;
+                        bones[i].transform.rotation = rotJoint;
+
+                        //player初期座標設定
+                        if (!CalledOnce && bones[1].transform.localPosition != new Vector3(0, 0, 0))
+                        {
+
+                            Vector3 playerposfirst = Player.gameObject.transform.position;
+                            playerposfirst = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
+                            Player.gameObject.transform.position = playerposfirst;
+                            Debug.Log(playerposfirst);
+
+                        }
+
+                        //player落下検出初期位置戻る
+                        Vector3 playerpos = Player.gameObject.transform.position;
+                        if (Player.gameObject.transform.position.y < -50)
+                        {
+                            playerpos = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
+                            Player.gameObject.transform.position = playerpos;
+                        }
+
+
+
+                        //時間制限でシーン切り替え
+                        if (nowTime < 0)
+                        {
+
+                            GameOver("Game Over", "Score" + score.ToString());
+
+                        }
+
                     }
-
-                    //player落下検出初期位置戻る
-                    Vector3 playerpos = Player.gameObject.transform.position;
-                    if(Player.gameObject.transform.position.y < -50)
-                    {
-                        playerpos = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
-                        Player.gameObject.transform.position = playerpos;
-                    }
-
-                    
-
-                    //時間制限でシーン切り替え
-                    if (nowTime < 0)
-                    {
-                        
-                        GameOver("Game Over", "Score" + score.ToString());
-                        
-                    }
-
                 }
                 else
                 {
                     bones[i].gameObject.SetActive(false);
-                    
+
                 }
+                
 
             }
         }
@@ -266,9 +273,24 @@ public class PlayerControll_2 : MonoBehaviour
         //タイマー(認識したらスタート)
         if (CalledOnce)
         {
-            nowTime -= Time.deltaTime ;
+            nowTime -= Time.deltaTime;
         }
-        timeText.text = nowTime.ToString("F0");
+        
+        if (CalledOnce2)
+        {
+            timeText.text = nowTime.ToString("F0");
+        }
+        else
+        {
+            float waittime = nowTime - (firstTime - 5);
+            timeText.text = waittime.ToString("F0");
+
+            if(waittime < 0)
+            {
+                nowTime = firstTime;
+                CalledOnce2 = true;//フラグ
+            }
+        }
 
     }
 
@@ -284,7 +306,7 @@ public class PlayerControll_2 : MonoBehaviour
 
             // スコアを加算します
             score = score + 1;
-           
+
             // UI の表示を更新します
             SetCountText();
         }
@@ -295,9 +317,9 @@ public class PlayerControll_2 : MonoBehaviour
     {
         int st = score;
         // スコアの表示を更新
-        scoreText.text = "Count:"+ st.ToString();
+        scoreText.text = "Count:" + st.ToString();
 
-       
+
 
 
         // すべての収集アイテムを獲得した場合
@@ -309,7 +331,7 @@ public class PlayerControll_2 : MonoBehaviour
     }
 
     public void GameOver(string resultMessage, string scoreMessage)
-    {  
+    {
         DataSender.resultMessage = resultMessage;  //受け取った引数をstatic変数へ格納
         DataSender.scoreMessage = scoreMessage;
         SceneManager.LoadScene("Result");
