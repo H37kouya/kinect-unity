@@ -175,7 +175,7 @@ public class PlayerControll_2 : MonoBehaviour
         Vector3 posPointMan = manager.GetUserPosition(playerID);
         posPointMan.z = !MirroredMovement ? -posPointMan.z : posPointMan.z;
 
-        // store the initial position
+        // store the initial position(最初initialPosUserIDは0)
         if (initialPosUserID != playerID)
         {
             initialPosUserID = playerID;
@@ -187,6 +187,7 @@ public class PlayerControll_2 : MonoBehaviour
         // update the local positions of the bones
         for (int i = 0; i < bones.Length; i++)
         {
+            
             if (bones[i] != null)
             {
                 int joint = MirroredMovement ? KinectWrapper.GetSkeletonMirroredJoint(i) : i;
@@ -242,12 +243,7 @@ public class PlayerControll_2 : MonoBehaviour
                         Player.gameObject.transform.position = playerpos;
                     }
 
-                    //タイマー(認識したらスタート)
-                    if(bones[1].transform.localPosition != new Vector3(0, 0, 0))
-                    {
-                        nowTime -= Time.deltaTime/10;
-                    }
-                    timeText.text = nowTime.ToString("F0");
+                    
 
                     //時間制限でシーン切り替え
                     if (nowTime < 0)
@@ -266,6 +262,14 @@ public class PlayerControll_2 : MonoBehaviour
 
             }
         }
+
+        //タイマー(認識したらスタート)
+        if (CalledOnce)
+        {
+            nowTime -= Time.deltaTime ;
+        }
+        timeText.text = nowTime.ToString("F0");
+
     }
 
     // 玉が他のオブジェクトにぶつかった時に呼び出される
