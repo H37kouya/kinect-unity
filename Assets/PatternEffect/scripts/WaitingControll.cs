@@ -4,15 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PlayerControll_2 : MonoBehaviour
+public class WaitingControll : MonoBehaviour
 {
-    public float firstTime;//初期タイム(タイムと同じ。初期タイム取り方わからん...)
-    public float nowTime; //タイム
-    public Text scoreText; // スコアの UI
+    public float nowTime;
     public Text timeText; // タイムの UI
 
-    //private Rigidbody rb; // Rididbody
-    private int score; // スコア
     public bool MoveVertically = false;
     public bool MirroredMovement = false;
 
@@ -40,7 +36,7 @@ public class PlayerControll_2 : MonoBehaviour
     public GameObject Knee_Right;
     public GameObject Ankle_Right;
     public GameObject Foot_Right;
-    public GameObject Player;
+
 
     // player取得
     //GameObject player = GameObject.Find("player");
@@ -52,7 +48,7 @@ public class PlayerControll_2 : MonoBehaviour
     private int[] parIdxs;
 
     // add new Cube
-    
+
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -60,27 +56,26 @@ public class PlayerControll_2 : MonoBehaviour
     private uint initialPosUserID = 0;
     private Quaternion rotation;
 
-    public PlayerControll_2(Quaternion rotation)
+    public WaitingControll(Quaternion rotation)
     {
         this.rotation = rotation;
     }
 
-    
+
 
     void Start()
     {
         float firstTime = nowTime;
 
         // UI を初期化
-        score = 0;
-        SetCountText();
-        timeText.text = "";
+
+        SetText("Waiting");
+
+
+
 
 
        
-
-        //最初player非表示
-        Player.gameObject.SetActive(false);
 
         //store bones in a list for easier access
         bones = new GameObject[] {
@@ -100,7 +95,7 @@ public class PlayerControll_2 : MonoBehaviour
         };
 
         // new setup cubes
-       
+
 
         // array holding the skeleton lines
         lines = new LineRenderer[bones.Length];
@@ -125,7 +120,7 @@ public class PlayerControll_2 : MonoBehaviour
 
     void Update()
     {
-       
+
         //ここからkinect関係
         KinectManager manager = KinectManager.Instance;
 
@@ -167,7 +162,7 @@ public class PlayerControll_2 : MonoBehaviour
                 }
             }
 
-           
+
 
         }
 
@@ -194,8 +189,8 @@ public class PlayerControll_2 : MonoBehaviour
                 if (manager.IsJointTracked(playerID, joint))
                 {
                     bones[i].gameObject.SetActive(true);
-                    Player.gameObject.SetActive(true);
-                    
+                   
+
 
                     Vector3 posJoint = manager.GetJointPosition(playerID, joint);
                     posJoint.z = !MirroredMovement ? -posJoint.z : posJoint.z;
@@ -221,95 +216,46 @@ public class PlayerControll_2 : MonoBehaviour
                     bones[i].transform.localPosition = posJoint * 20.0f;
                     bones[i].transform.rotation = rotJoint;
 
-                    //player初期座標設定
                     if (!CalledOnce && bones[1].transform.localPosition != new Vector3(0, 0, 0))
                     {
-                        
-                        Vector3 playerposfirst = Player.gameObject.transform.position;
-                        playerposfirst = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
-                        Player.gameObject.transform.position = playerposfirst;
-                        Debug.Log(playerposfirst);
-                        CalledOnce = true;
 
-                        
+
+                        //タイマー(認識したらスタート)
+                        if (bones[1].transform.localPosition != new Vector3(0, 0, 0))
+                        {
+                            nowTime -= Time.deltaTime / 10;
+                        }
+                        SetText(nowTime.ToString("F0"));
+
+                        //時間制限でシーン切り替え
+                        if (nowTime < 0)
+                        {
+
+                            MovingScene();
+
+                        }
+
                     }
-
-                    //player落下検出初期位置戻る
-                    Vector3 playerpos = Player.gameObject.transform.position;
-                    if(Player.gameObject.transform.position.y < -50)
+                    else
                     {
-                        playerpos = new Vector3(bones[1].transform.localPosition.x, bones[1].transform.localPosition.y + 2.0f, bones[1].transform.localPosition.z);
-                        Player.gameObject.transform.position = playerpos;
-                    }
+                        bones[i].gameObject.SetActive(false);
 
-                    //タイマー(認識したらスタート)
-                    if(bones[1].transform.localPosition != new Vector3(0, 0, 0))
-                    {
-                        nowTime -= Time.deltaTime/10;
-                    }
-                    timeText.text = nowTime.ToString("F0");
-
-                    //時間制限でシーン切り替え
-                    if (nowTime < 0)
-                    {
-                        
-                        GameOver("Game Over", "Score" + score.ToString());
-                        
                     }
 
                 }
-                else
-                {
-                    bones[i].gameObject.SetActive(false);
-                    
-                }
-
             }
         }
-    }
 
-    // 玉が他のオブジェクトにぶつかった時に呼び出される
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(other.name);
-        // ぶつかったオブジェクトが収集アイテムだった場合
-        if (other.gameObject.CompareTag("Pick up"))
+    }
+        void SetText(string text)
         {
-            // その収集アイテムを非表示にします
-            other.gameObject.SetActive(false);
-
-            // スコアを加算します
-            score = score + 1;
-           
-            // UI の表示を更新します
-            SetCountText();
+            timeText.text = text;
         }
-    }
 
-    // UI の表示を更新する(ぶつかったとき）
-    void SetCountText()
-    {
-        int st = score;
-        // スコアの表示を更新
-        scoreText.text = "Count:"+ st.ToString();
-
-       
-
-
-        // すべての収集アイテムを獲得した場合
-        if (score >= 12)
+        void MovingScene()
         {
-            nowTime = firstTime - nowTime;
-            GameOver(nowTime.ToString() + "秒でクリア!", "Score:12");
+            SceneManager.LoadScene("minigame");
         }
-    }
-
-    public void GameOver(string resultMessage, string scoreMessage)
-    {  
-        DataSender.resultMessage = resultMessage;  //受け取った引数をstatic変数へ格納
-        DataSender.scoreMessage = scoreMessage;
-        SceneManager.LoadScene("Result");
-    }
 
 }
 
