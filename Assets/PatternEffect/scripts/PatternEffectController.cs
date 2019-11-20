@@ -2,6 +2,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Networking;
 using System.Collections.Generic;
 
 public class PatternEffectController : MonoBehaviour
@@ -34,10 +35,10 @@ public class PatternEffectController : MonoBehaviour
     public GameObject[] PatternObject;
 
     public float[] VisibleTime;
-    public float VisibleTimeMax = 5.0f;
+    public const float VisibleTimeMax = 5.0f;
     public bool[] VisibleTimeBool;
 
-    public float FadeSpeed = 0.01f;
+    public const float FadeSpeed = 0.01f;
     public Color FadeSpeedColor = new Color(0.01f, 0.01f, 0.01f, 0.01f);
 
     // 待機画面表示中かどうか
@@ -45,6 +46,17 @@ public class PatternEffectController : MonoBehaviour
 
     // 待機画面のゲームオブジェクト
     public GameObject WaitingDisplayObject;
+
+    /**
+     *
+     * 初期状態はfalse。web server を開けないときは unity project 上から false にしておくこと。
+     * もし、web urlを開けるときは unity project上から true にしておくこと
+     *
+     **/
+    public bool WebSenderCheck = false;
+
+    //接続するURL
+    private const string URL = "http://localhost/UnityCount/public/api/detected";
 
     void Start()
     {
@@ -81,11 +93,14 @@ public class PatternEffectController : MonoBehaviour
         {
             if (manager.IsUserDetected())
             {
+                WebSender(); // 人数カウント処理のための web 送信
+
                 // 待機画面表示中だったら非表示にする
                 WaitingDisplayDown();
 
                 // kinect 関連の処理
                 MainKinectControll(manager);
+
             }
         }
 
@@ -263,4 +278,40 @@ public class PatternEffectController : MonoBehaviour
         }
     }
 
+    // web 送信に関する処理
+    void WebSender()
+    {
+        if (WaitingDisplay && WebSenderCheck)
+        {
+            WebSenderCheck = false; // 多重送信回避のために必要
+            StartCoroutine("OnSend", URL); // web に post するコルーチンの呼び出し
+        }
+    }
+    // web 送信用のコルーチン
+    IEnumerator OnSend(string url)
+    {
+        //POSTする情報
+        WWWForm form = new WWWForm();
+
+        //URLをPOSTで用意
+        UnityWebRequest webRequest = UnityWebRequest.Post(url, form);
+        //UnityWebRequestにバッファをセット
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+        //URLに接続して結果が戻ってくるまで待機
+        yield return webRequest.SendWebRequest();
+
+        //エラーが出ていないかチェック
+        if (webRequest.isNetworkError)
+        {
+            //通信失敗
+            Debug.Log(webRequest.error);
+            WebSenderCheck = true;
+        }
+        else
+        {
+            //通信成功
+            Debug.Log(webRequest.downloadHandler.text);
+            WebSenderCheck = true;
+        }
+    }
 }
