@@ -16,8 +16,6 @@ public class PlayerControll_2 : MonoBehaviour
     public bool MoveVertically = false;
     public bool MirroredMovement = false;
 
-
-
     //public GameObject debugText;
 
     public GameObject Hip_Center;
@@ -50,9 +48,6 @@ public class PlayerControll_2 : MonoBehaviour
     private GameObject[] bones;
     private LineRenderer[] lines;
     private int[] parIdxs;
-
-    // add new Cube
-
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -98,8 +93,6 @@ public class PlayerControll_2 : MonoBehaviour
             0, 12, 13, 14,
             0, 16, 17, 18
         };
-
-        // new setup cubes
 
 
         // array holding the skeleton lines
@@ -167,9 +160,6 @@ public class PlayerControll_2 : MonoBehaviour
                     lines[i].gameObject.SetActive(false);
                 }
             }
-
-
-
         }
 
         // set the user position in space
@@ -195,6 +185,7 @@ public class PlayerControll_2 : MonoBehaviour
 
                 if (manager.IsJointTracked(playerID, joint))
                 {
+
                     CalledOnce = true;//フラグ
 
                     //認識して5秒経ったらtrue
