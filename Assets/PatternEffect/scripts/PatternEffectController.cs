@@ -94,42 +94,16 @@ public class PatternEffectController : MonoBehaviour
             if (manager.IsUserDetected())
             {
                 WebSender(); // 人数カウント処理のための web 送信
-
-                // 待機画面表示中だったら非表示にする
-                WaitingDisplayDown();
-
-                // kinect 関連の処理
-                MainKinectControll(manager);
-
+                WaitingDisplayDown(); // 待機画面表示中だったら非表示にする
+                MainKinectControll(manager); // kinect 関連の処理
             }
         }
 
-        bool countCheck = false;
+        // time に関する処置。
+        bool countCheck = TimeProcess(Time.deltaTime);
 
-        for (int joint = 0; joint < PatternObject.Length; joint++)
-        {
-            Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
-
-            if (VisibleTimeBool[joint])
-            {
-                VisibleTime[joint] += Time.deltaTime;
-                countCheck = true;
-                FadeIn(joint, PatternObjectColor); // フェードイン を行う
-            }
-
-            if (VisibleTime[joint] > VisibleTimeMax)
-            {
-                countCheck = true;
-                FadeOut(joint, PatternObjectColor); // フェードアウト を行う
-            }
-        }
-
-        // 待機画面表示してなくて、タイマーが動かなかったとき。
-        if (!countCheck && !WaitingDisplay)
-        {
-            // 待機画面表示処理
-            WaitingDisplayOn();
-        }
+        // 待機画面にする必要があるとき、待機画面へ変更
+        WaitingDisplayOnByCountCheck(countCheck);
     }
 
     // 座標が特定の誤差以下かを判別する
@@ -217,6 +191,32 @@ public class PatternEffectController : MonoBehaviour
         PatternObjectVisible(joint);
     }
 
+    // timer に変更があったとき、true を返す
+    bool TimeProcess(float deltaTime)
+    {
+        bool countCheck = false;
+
+        for (int joint = 0; joint < PatternObject.Length; joint++)
+        {
+            Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
+
+            if (VisibleTimeBool[joint])
+            {
+                VisibleTime[joint] += deltaTime;
+                countCheck = true;
+                FadeIn(joint, PatternObjectColor); // フェードイン を行う
+            }
+
+            if (VisibleTime[joint] > VisibleTimeMax)
+            {
+                countCheck = true;
+                FadeOut(joint, PatternObjectColor); // フェードアウト を行う
+            }
+        }
+
+        return countCheck;
+    }
+
     // 待機画面表示に変更
     void WaitingDisplayOn()
     {
@@ -224,6 +224,16 @@ public class PatternEffectController : MonoBehaviour
         WaitingDisplayObject.SetActive(true);
     }
 
+    // 条件付きで待機画面を表示へ変更。
+    void WaitingDisplayOnByCountCheck(bool countCheck)
+    {
+        // 待機画面表示してなくて、タイマーが動かなかったとき。
+        if (!countCheck && !WaitingDisplay)
+        {
+            // 待機画面表示処理
+            WaitingDisplayOn();
+        }
+    }
     // 待機画面非表示へ変更
     void WaitingDisplayDown()
     {
