@@ -1,8 +1,9 @@
-using UnityEngine;
-using System.Collections;
 using System.IO;
-using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+
 public class PatternEffectController : MonoBehaviour
 {
     public Vector3[] outputPositions;
@@ -38,6 +39,11 @@ public class PatternEffectController : MonoBehaviour
     public float FadeSpeed = 0.01f;
     public Color FadeSpeedColor = new Color(0.01f, 0.01f, 0.01f, 0.01f);
 
+    // 待機画面表示中かどうか
+    public bool WaitingDisplay = true;
+
+    public GameObject WaitingDisplayObject;
+
     void Start()
     {
         PatternObject = new GameObject[] {
@@ -60,6 +66,7 @@ public class PatternEffectController : MonoBehaviour
             VisibleTimeBool[i] = false;
         }
 
+        WaitingDisplayOn();
     }
 
     void Update()
@@ -71,38 +78,18 @@ public class PatternEffectController : MonoBehaviour
         {
             if (manager.IsUserDetected())
             {
-                uint userId = manager.GetPlayer1ID();
-
-                for (int joint = 0; joint < PatternObject.Length; joint++)
+                // 待機画面表示中だったら非表示にする
+                if (WaitingDisplay)
                 {
-                    if (manager.IsJointTracked(userId, joint) && !VisibleTimeBool[joint])
-                    {
-                        // output the joint position for easy tracking
-                        Vector3 jointPos = manager.GetJointPosition(userId, joint);
-
-                        // Debug.Log(jointPos);
-
-                        if (!EqualVector3(jointPos, PatternObject[joint].transform.position))
-                        {
-                            jointPos.x = 20 * Mathf.Pow(jointPos.x, 3); // 通常使用で発散しないギリギリライン
-                            VisibleTime[joint] = 0.0f;
-                            VisibleTimeBool[joint] = true;
-                            PatternObjectVisible(joint);
-                            PatternObject[joint].transform.position = jointPos;
-
-                            // Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
-                            // PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
-                            //     PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0
-                            // );
-                            PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
-                                0, 0, 0, 0
-                            );
-                        }
-                        // outputPositions[joint] = jointPos;
-                    }
+                    WaitingDisplayDown();
                 }
+
+                // kinect 関連の処理
+                MainKinectControll(manager);
             }
         }
+
+        bool countCheck = false;
 
         for (int joint = 0; joint < PatternObject.Length; joint++)
         {
@@ -110,6 +97,7 @@ public class PatternEffectController : MonoBehaviour
 
             if (VisibleTimeBool[joint])
             {
+                countCheck = true;
                 VisibleTime[joint] += Time.deltaTime;
 
                 if (PatternObject[joint].GetComponent<Renderer>().material.color.a < 1.0f)
@@ -120,7 +108,8 @@ public class PatternEffectController : MonoBehaviour
 
             if (VisibleTime[joint] > 5.0f)
             {
-                // FadeOut(joint);
+                countCheck = true;
+
                 if ((PatternObjectColor - FadeSpeedColor).a > 0)
                 {
                     PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor - FadeSpeedColor;
@@ -139,6 +128,13 @@ public class PatternEffectController : MonoBehaviour
                     PatternObjectDisVisible(joint);
                 }
             }
+        }
+
+        // 待機画面表示してなくて、タイマーが動かなかったとき。
+        if (!countCheck && !WaitingDisplay)
+        {
+            // 待機画面表示処理
+            WaitingDisplayOn();
         }
     }
 
@@ -169,6 +165,40 @@ public class PatternEffectController : MonoBehaviour
         return true;
     }
 
+    void MainKinectControll(KinectManager manager)
+    {
+        uint userId = manager.GetPlayer1ID();
+
+        for (int joint = 0; joint < PatternObject.Length; joint++)
+        {
+            if (manager.IsJointTracked(userId, joint) && !VisibleTimeBool[joint])
+            {
+                // output the joint position for easy tracking
+                Vector3 jointPos = manager.GetJointPosition(userId, joint);
+
+                // Debug.Log(jointPos);
+
+                if (!EqualVector3(jointPos, PatternObject[joint].transform.position))
+                {
+                    jointPos.x = 20 * Mathf.Pow(jointPos.x, 3); // 通常使用で発散しないギリギリライン
+                    VisibleTime[joint] = 0.0f;
+                    VisibleTimeBool[joint] = true;
+                    PatternObjectVisible(joint);
+                    PatternObject[joint].transform.position = jointPos;
+
+                    // Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
+                    // PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
+                    //     PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0
+                    // );
+                    PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
+                        0, 0, 0, 0
+                    );
+                }
+                // outputPositions[joint] = jointPos;
+            }
+        }
+    }
+
     // PatternObjectの表示
     void PatternObjectVisible(int joint)
     {
@@ -179,6 +209,20 @@ public class PatternEffectController : MonoBehaviour
     void PatternObjectDisVisible(int joint)
     {
         PatternObject[joint].SetActive(false);
+    }
+
+    // 待機画面表示に変更
+    void WaitingDisplayOn()
+    {
+        WaitingDisplay = true;
+        WaitingDisplayObject.SetActive(true);
+    }
+
+    // 待機画面非表示へ変更
+    void WaitingDisplayDown()
+    {
+        WaitingDisplay = false;
+        WaitingDisplayObject.SetActive(false);
     }
 
     // fade in の実装
