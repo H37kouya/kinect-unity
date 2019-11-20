@@ -7,7 +7,7 @@ public class PrefabTest : MonoBehaviour
     private float time;
 
     public GameObject[] objects;
-    
+    private GameObject useobjects;
 
     // Use this for initialization
     void Start()
@@ -15,11 +15,11 @@ public class PrefabTest : MonoBehaviour
         // CubeプレハブをGameObject型で取得
         // GameObject obj = (GameObject)Resources.Load("MovingCreate");
         objects = new GameObject[24];
-       
-        for (int i = 0; i < 1; i++)
+       // useobjects = new GameObject[24];
+        for (int i = 0; i < 3; i++)
         {
-            objects[i] = (GameObject)Resources.Load("MovingCreate");
-            Instantiate(objects[i], new Vector3(0.0f, 2.0f * 0.3f * i, 0.0f), Quaternion.identity);
+            objects[i]= (GameObject)Resources.Load("MovingCreate");
+            objects[i] = Instantiate(objects[i], new Vector3(0.0f, 2.0f * 0.3f * i, 0.0f), Quaternion.identity);
             
         }
         // Cubeプレハブを元に、インスタンスを生成、
@@ -39,12 +39,10 @@ public class PrefabTest : MonoBehaviour
 
         // }
 
-        Debug.Log("unchi");
-        for (int i=0; i < 1; i++)
+       
+        for (int i=0; i < 3; i++)
         {
-            Vector3 tmpVec = objects[i].transform.position;
-            Debug.Log(new Vector3(tmpVec.x, tmpVec.y + 0.2f * Random.value, tmpVec.z));
-            objects[i].transform.position = new Vector3(tmpVec.x + 0.2f, tmpVec.y + 0.2f, tmpVec.z);
+            objects[i].gameObject.transform.Translate(0, 0.5f, 0);
         }
 
         //if (transform.position.y > 5)
