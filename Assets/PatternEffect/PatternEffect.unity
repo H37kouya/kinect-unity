@@ -531,7 +531,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 630662584}
   m_Father: {fileID: 238279336}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -850,6 +851,85 @@ Transform:
   m_Father: {fileID: 1588306308}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &630662583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 630662584}
+  - component: {fileID: 630662586}
+  - component: {fileID: 630662585}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &630662584
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630662583}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 544169753}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 240, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &630662585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630662583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 28
+    m_FontStyle: 1
+    m_BestFit: 1
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\u5F85\u6A5F\u4E2D"
+--- !u!222 &630662586
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630662583}
+  m_CullTransparentMesh: 0
 --- !u!1 &640826698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1928,7 +2008,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588306306}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f828727d4cfb7a4b8984b4e0310ae67, type: 3}
   m_Name: 
@@ -1999,7 +2079,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588306306}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4c36a4d46fc522499f376c5ffee57d4, type: 3}
   m_Name: 
@@ -2007,32 +2087,33 @@ MonoBehaviour:
   outputPositions: []
   Cube0: {fileID: 607276926}
   Sphere: {fileID: 640826698}
-  Cube1: {fileID: 0}
-  Cube2: {fileID: 0}
-  Cube3: {fileID: 0}
-  Cube4: {fileID: 0}
-  Cube5: {fileID: 0}
-  Cube6: {fileID: 0}
-  Cube7: {fileID: 0}
-  Cube8: {fileID: 0}
-  Cube9: {fileID: 0}
-  Sphere10: {fileID: 0}
-  Capsule11: {fileID: 0}
-  Cylinder12: {fileID: 0}
-  Sphere13: {fileID: 0}
-  Capsule14: {fileID: 0}
-  Cylinder15: {fileID: 0}
-  Tree16: {fileID: 0}
-  Cube17: {fileID: 0}
-  Cube18: {fileID: 0}
-  Cube19: {fileID: 0}
+  Cube1: {fileID: 616974479}
+  Cube2: {fileID: 1289289362}
+  Cube3: {fileID: 1973347712}
+  Cube4: {fileID: 1399423152}
+  Cube5: {fileID: 1655417300}
+  Cube6: {fileID: 1906819796}
+  Cube7: {fileID: 986659862}
+  Cube8: {fileID: 1901096774}
+  Cube9: {fileID: 1812404073}
+  Sphere10: {fileID: 1230139213}
+  Capsule11: {fileID: 920320469}
+  Cylinder12: {fileID: 600733944}
+  Sphere13: {fileID: 698388362}
+  Capsule14: {fileID: 1350738447}
+  Cylinder15: {fileID: 724298865}
+  Tree16: {fileID: 1142794257}
+  Cube17: {fileID: 371727203}
+  Cube18: {fileID: 1798638126}
+  Cube19: {fileID: 1593364930}
   PatternObject: []
   VisibleTime: []
+  VisibleTimeMax: 5
   VisibleTimeBool: 
   FadeSpeed: 0.01
   FadeSpeedColor: {r: 0.01, g: 0.01, b: 0.01, a: 0.01}
   WaitingDisplay: 1
-  WaitingDisplayObject: {fileID: 238279332}
+  WaitingDisplayObject: {fileID: 544169752}
 --- !u!1 &1593364930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,7 +2791,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909332751}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
