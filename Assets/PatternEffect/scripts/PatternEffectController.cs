@@ -225,7 +225,7 @@ public class PatternEffectController : MonoBehaviour
         // Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
         if (PatternObject[joint].GetComponent<Renderer>().material.color.a < 1.0f)
         {
-            if ((PatternObjectColor + FadeSpeedColor).a < 1.0f)
+            if (PatternObjectColor.a + FadeSpeedColor.a < 1.0f)
             {
                 PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor + FadeSpeedColor;
             }
@@ -244,7 +244,7 @@ public class PatternEffectController : MonoBehaviour
     // fade out の実装
     void FadeOut(int joint, Color PatternObjectColor)
     {
-        if ((PatternObjectColor - FadeSpeedColor).a > 0)
+        if (PatternObjectColor.a - FadeSpeedColor.a > 0)
         {
             PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor - FadeSpeedColor;
         }
