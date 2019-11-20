@@ -336,6 +336,7 @@ public class PatternEffectController : MonoBehaviour
     // web 送信用のコルーチン
     IEnumerator OnSend(string url)
     {
+        WebSenderCheck = false; // 多重送信回避のために必要
         //POSTする情報
         WWWForm form = new WWWForm();
 
