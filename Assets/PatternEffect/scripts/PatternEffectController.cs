@@ -5,14 +5,6 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 public class PatternEffectController : MonoBehaviour
 {
-    // the joint we want to track
-    // public KinectWrapper.NuiSkeletonPositionIndex joint = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
-
-    // public KinectWrapper.NuiSkeletonPositionIndex[] joints;
-
-    // joint position at the moment, in Kinect coordinates
-    // public Vector3 outputPosition;
-
     public Vector3[] outputPositions;
 
     public GameObject Cube0;
@@ -45,25 +37,13 @@ public class PatternEffectController : MonoBehaviour
 
     public float FadeSpeed = 0.01f;
     public Color FadeSpeedColor = new Color(0.01f, 0.01f, 0.01f, 0.01f);
-    // if it is saving data to a csv file or not
-    // public bool isSaving = false;
-
-    // how many seconds to save data into the csv file, or 0 to save non-stop
-    // public float secondsToSave = 0f;
-
-    // path to the csv file (;-limited)
-    // public string saveFilePath = "joint_pos.csv";
-
-
-    // start time of data saving to csv file
-    // private float saveStartTime = -1f;
 
     void Start()
     {
         PatternObject = new GameObject[] {
             Cube0, Sphere, Cube1, Cube2, // 0 - 3
             Cube3, Cube4, Cube5, Cube6, // 4 - 7
-            Cube7, Cube8, Cube9, Sphere10, // 8 - 11 
+            Cube7, Cube8, Cube9, Sphere10, // 8 - 11
             Cylinder12, Sphere13, Capsule14, Cylinder15,// 12 - 15
             Tree16, Cube17, Cube18, Cube19,// 16 - 19
         };
@@ -200,25 +180,6 @@ public class PatternEffectController : MonoBehaviour
     {
         PatternObject[joint].SetActive(false);
     }
-
-    // fade outの実装
-    // void FadeOut(int joint)
-    // {
-    //     Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
-
-    //     Debug.Log((PatternObjectColor - FadeSpeedColor).a);
-
-    //     if ((PatternObjectColor - FadeSpeedColor).a > 0)
-    //     {
-    //         PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor - FadeSpeedColor;
-    //     }
-    //     else
-    //     {
-    //         PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
-    //             PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0f
-    //         );
-    //     }
-    // }
 
     // fade in の実装
     void FadeIn(int joint)
