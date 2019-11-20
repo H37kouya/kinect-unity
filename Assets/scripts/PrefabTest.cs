@@ -21,7 +21,7 @@ public class PrefabTest : MonoBehaviour
         {
             useobjects= (GameObject)Resources.Load("MovingCreate");
             objects[i] = Instantiate(useobjects, new Vector3(0.0f, 0, 0.0f), Quaternion.identity);
-            objects[i].transform.Rotate(new Vector3(0, 0, i*10));
+            objects[i].transform.Rotate(0, 0, i*10);
 
         }
        
@@ -37,24 +37,26 @@ public class PrefabTest : MonoBehaviour
         {
             // objects[i].gameObject.transform.Translate(1.0f, 0.5f, 0);
            //objects[i].transform.Rotate(new Vector3(i*10, 30, 1));
-
-            objects[i].gameObject.transform.Translate(objects[i].transform.right);
+           
+           // objects[i].gameObject.transform.Translate(objects[i].transform.right);//物体正面(初期位置z軸方向)から見て右に移動
         }
+            StartCoroutine("CreateObj");
 
     }
 
     IEnumerator CreateObj()
     {
-        while (true)
+        for ( int i = 0; i < 100; i++)
         {
             if (true)
             {
-                GameObject obj = (GameObject)Resources.Load("MovingCreate");
-                Instantiate(obj, new Vector3(0.0f, time, 0.0f), Quaternion.identity);
+                //GameObject obj = (GameObject)Resources.Load("MovingCreate");
+                //Instantiate(obj, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
 
 
+                objects[i].gameObject.transform.Translate(objects[i].transform.right);
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.1f);
             }
             else
             {
