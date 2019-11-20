@@ -2108,12 +2108,11 @@ MonoBehaviour:
   Cube19: {fileID: 1593364930}
   PatternObject: []
   VisibleTime: []
-  VisibleTimeMax: 5
   VisibleTimeBool: 
-  FadeSpeed: 0.01
   FadeSpeedColor: {r: 0.01, g: 0.01, b: 0.01, a: 0.01}
   WaitingDisplay: 1
   WaitingDisplayObject: {fileID: 544169752}
+  WebSenderCheck: 1
 --- !u!1 &1593364930
 GameObject:
   m_ObjectHideFlags: 0
