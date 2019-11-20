@@ -35,6 +35,8 @@ public class PatternEffectController : MonoBehaviour
 
     public GameObject[] PatternObject;
 
+    public int[] PatternObjectJoint;
+
     public float[] VisibleTime;
     public const float VisibleTimeMax = 5.0f;
     public bool[] VisibleTimeBool;
@@ -64,11 +66,16 @@ public class PatternEffectController : MonoBehaviour
     void Start()
     {
         PatternObject = new GameObject[] {
-            Cube0, Sphere, Cube1, Cube2, // 0 - 3
-            Cube3, Cube4, Cube5, Cube6, // 4 - 7
-            Cube7, Cube8, Cube9, Sphere10, // 8 - 11
-            Cylinder12, Sphere13, Capsule14, Cylinder15,// 12 - 15
-            Tree16, Cube17, Cube18, Cube19,// 16 - 19
+            Cube0, Sphere, Cube1
+        };
+        // Cube2, // 0 - 3
+        // Cube3, Cube4, Cube5, Cube6, // 4 - 7
+        // Cube7, Cube8, Cube9, Sphere10, // 8 - 11
+        // Cylinder12, Sphere13, Capsule14, Cylinder15,// 12 - 15
+        // Tree16, Cube17, Cube18, Cube19,// 16 - 19
+
+        PatternObjectJoint = new int[] {
+            0, 7, 11
         };
 
         // 配列の初期化 領域の確保
@@ -146,10 +153,11 @@ public class PatternEffectController : MonoBehaviour
 
         for (int joint = 0; joint < PatternObject.Length; joint++)
         {
-            if (manager.IsJointTracked(userId, joint) && !VisibleTimeBool[joint])
+            int jointNum = PatternObjectJoint[joint]; // 関節番号の取得
+            if (manager.IsJointTracked(userId, jointNum) && !VisibleTimeBool[joint])
             {
                 // output the joint position for easy tracking
-                Vector3 jointPos = manager.GetJointPosition(userId, joint);
+                Vector3 jointPos = manager.GetJointPosition(userId, jointNum);
 
                 if (!EqualVector3(jointPos, PatternObject[joint].transform.position))
                 {
@@ -260,6 +268,7 @@ public class PatternEffectController : MonoBehaviour
             WaitingDisplayOn();
         }
     }
+
     // 待機画面非表示へ変更
     void WaitingDisplayDown()
     {
@@ -323,6 +332,7 @@ public class PatternEffectController : MonoBehaviour
             StartCoroutine("OnSend", URL); // web に post するコルーチンの呼び出し
         }
     }
+
     // web 送信用のコルーチン
     IEnumerator OnSend(string url)
     {
