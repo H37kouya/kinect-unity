@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c9a741dab6fcccc489c0b2d08c50f4c0
+guid: 9253e8398854ffa4da1e87cfc87b420４
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -88,7 +88,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -145,10 +145,10 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 3
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
