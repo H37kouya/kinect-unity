@@ -31,12 +31,15 @@ public class PatternEffectController : MonoBehaviour
     public GameObject Cube18;
     public GameObject Cube19;
 
+    public Text TimerDisplay;
 
     public GameObject[] PatternObject;
 
     public float[] VisibleTime;
     public const float VisibleTimeMax = 5.0f;
     public bool[] VisibleTimeBool;
+
+    public float nowTime = 100.0f;
 
     public const float FadeSpeed = 0.01f;
     public Color FadeSpeedColor = new Color(0.01f, 0.01f, 0.01f, 0.01f);
@@ -79,6 +82,9 @@ public class PatternEffectController : MonoBehaviour
             PatternObjectDisVisible(i);
             VisibleTimeBool[i] = false;
         }
+
+        // text の初期化
+        TimerDisplayTextUpdate();
 
         // 待機画面の表示 (初期化)
         WaitingDisplayOn();
@@ -214,7 +220,27 @@ public class PatternEffectController : MonoBehaviour
             }
         }
 
+        if (countCheck)
+        {
+            nowTime -= deltaTime;
+            TimerDisplayTextUpdate();
+        }
+        else
+        {
+            TimerDisplay.enabled = false;
+        }
+
         return countCheck;
+    }
+
+    void TimerDisplayTextUpdate()
+    {
+        if (!TimerDisplay.enabled)
+        {
+            TimerDisplay.enabled = true;
+        }
+
+        TimerDisplay.text = "Time: " + nowTime.ToString("F0");
     }
 
     // 待機画面表示に変更
