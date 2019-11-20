@@ -82,10 +82,7 @@ public class PatternEffectController : MonoBehaviour
             if (manager.IsUserDetected())
             {
                 // 待機画面表示中だったら非表示にする
-                if (WaitingDisplay)
-                {
-                    WaitingDisplayDown();
-                }
+                WaitingDisplayDown();
 
                 // kinect 関連の処理
                 MainKinectControll(manager);
@@ -100,26 +97,15 @@ public class PatternEffectController : MonoBehaviour
 
             if (VisibleTimeBool[joint])
             {
-                countCheck = true;
                 VisibleTime[joint] += Time.deltaTime;
-
-                if (PatternObject[joint].GetComponent<Renderer>().material.color.a < 1.0f)
-                {
-                    FadeIn(joint, PatternObjectColor);
-                }
+                countCheck = true;
+                FadeIn(joint, PatternObjectColor); // フェードイン を行う
             }
 
             if (VisibleTime[joint] > VisibleTimeMax)
             {
                 countCheck = true;
-                FadeOut(joint, PatternObjectColor);
-
-                // アルファの値が 0 のとき
-                if (PatternObject[joint].GetComponent<Renderer>().material.color.a == 0f)
-                {
-                    // timer と patternobjectを初期化
-                    PatternObjectTimeInitialize(joint);
-                }
+                FadeOut(joint, PatternObjectColor); // フェードアウト を行う
             }
         }
 
@@ -173,9 +159,7 @@ public class PatternEffectController : MonoBehaviour
                 if (!EqualVector3(jointPos, PatternObject[joint].transform.position))
                 {
                     jointPos.x = 20 * Mathf.Pow(jointPos.x, 3); // 通常使用で発散しないギリギリライン
-                    VisibleTime[joint] = 0.0f;
-                    VisibleTimeBool[joint] = true;
-                    PatternObjectVisible(joint);
+                    PatternObjectTimeStart(joint); // timer のカウント開始
                     PatternObject[joint].transform.position = jointPos;
 
                     // Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
@@ -211,6 +195,13 @@ public class PatternEffectController : MonoBehaviour
         PatternObjectDisVisible(joint);
     }
 
+    void PatternObjectTimeStart(int joint)
+    {
+        VisibleTime[joint] = 0.0f;
+        VisibleTimeBool[joint] = true;
+        PatternObjectVisible(joint);
+    }
+
     // 待機画面表示に変更
     void WaitingDisplayOn()
     {
@@ -221,30 +212,36 @@ public class PatternEffectController : MonoBehaviour
     // 待機画面非表示へ変更
     void WaitingDisplayDown()
     {
-        WaitingDisplay = false;
-        WaitingDisplayObject.SetActive(false);
+        if (WaitingDisplay)
+        {
+            WaitingDisplay = false;
+            WaitingDisplayObject.SetActive(false);
+        }
     }
 
     // fade in の実装
     void FadeIn(int joint, Color PatternObjectColor)
     {
         // Color PatternObjectColor = PatternObject[joint].GetComponent<Renderer>().material.color;
-
-        if ((PatternObjectColor + FadeSpeedColor).a < 1.0f)
+        if (PatternObject[joint].GetComponent<Renderer>().material.color.a < 1.0f)
         {
-            PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor + FadeSpeedColor;
-        }
-        else
-        {
-            // PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
-            //     PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 1f
-            // );
-            PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
-                1f, 1f, 1f, 1f
-            );
+            if ((PatternObjectColor + FadeSpeedColor).a < 1.0f)
+            {
+                PatternObject[joint].GetComponent<Renderer>().material.color = PatternObjectColor + FadeSpeedColor;
+            }
+            else
+            {
+                // PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
+                //     PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 1f
+                // );
+                PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
+                    1f, 1f, 1f, 1f
+                );
+            }
         }
     }
 
+    // fade out の実装
     void FadeOut(int joint, Color PatternObjectColor)
     {
         if ((PatternObjectColor - FadeSpeedColor).a > 0)
@@ -256,6 +253,13 @@ public class PatternEffectController : MonoBehaviour
             PatternObject[joint].GetComponent<Renderer>().material.color = new Color(
                 PatternObjectColor.r, PatternObjectColor.g, PatternObjectColor.b, 0f
             );
+        }
+
+        // アルファの値が 0 のとき
+        if (PatternObject[joint].GetComponent<Renderer>().material.color.a == 0f)
+        {
+            // timer と patternobjectを初期化
+            PatternObjectTimeInitialize(joint);
         }
     }
 
