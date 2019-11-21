@@ -7,6 +7,7 @@ public class PrefabTest : MonoBehaviour
     private float time;
     public GameObject Player;
     public GameObject[] objects;
+    public GameObject[] childobjects;
     private GameObject useobjects;
     private Quaternion[] forwardAxis;
     private Rigidbody[] rb;
@@ -17,11 +18,12 @@ public class PrefabTest : MonoBehaviour
     void Start()
     {
 
-        objects = new GameObject[100];
-        rb = new Rigidbody[100];
+        objects = new GameObject[50];
+        rb = new Rigidbody[50];
+        childobjects = new GameObject[50];
 
         time = 0.0f;
-
+        
         // circle 生成処理
         StartCoroutine("OnCreateCircle");
     }
@@ -34,11 +36,13 @@ public class PrefabTest : MonoBehaviour
     IEnumerator OnCreateCircle()
     {
         // このコルーチンの処理を待たせる時間
-        float WaitTime = 0.5f;
+        float WaitTime = 0.1f;
+        float WaitobjectTime = 0.05f;
         // オブジェクトを削除する時間
-        float ObjDeleteTime = WaitTime * 1.05f;
+        float ObjDeleteTime = WaitTime * 11f;
+        float childObjDeleteTime = WaitTime * 10.05f;
         // 周りに生成するオブジェクト数
-        int circleObjMaX = 12;
+        int circleObjMaX = 6;
         //円の大きさ
         int CircleDouble = 2;
 
@@ -52,6 +56,8 @@ public class PrefabTest : MonoBehaviour
                 // プレイヤーの座標取得 (更新)
                 PlayerPos = Player.gameObject.transform.position;
 
+                //for (int i = 0; i < circleObjMaX; i++)
+                //{
                 // 周りのオブジェクトを生成
                 for (int circleObjIdx = 0; circleObjIdx < circleObjMaX; circleObjIdx++)
                 {
@@ -62,32 +68,55 @@ public class PrefabTest : MonoBehaviour
                         CircleX(circleObjIdx, circleObjMaX, CircleDouble),
                         CircleY(circleObjIdx, circleObjMaX, CircleDouble),
                         0
-                    ); // = Relativevec
+                    );
 
-                    // 周りの円の位置を計算
+                    // 周りの円の位置を計算(1回目)
                     Vector3 objPos = PlayerPos + objVec; // = objectsVec
-                    
-                    // 周りの円の位置を計算
-                    //Vector3 objectsVec = new Vector3(
-                    //    PlayerPos.x + CircleX(circleObjIdx, circleObjMaX, CircleDouble),
-                    //    PlayerPos.y + CircleY(circleObjIdx, circleObjMaX, CircleDouble),
-                    //    PlayerPos.z
-                    //);
-
-                    //playerから見たオブジェクトの向きベクトル
-                    // Vector3 Relativevec = objectsVec - PlayerPos;
 
                     // オブジェクトを生成
                     objects[circleObjIdx] = Instantiate(useobjects, objPos, Quaternion.identity);
-
                     //rigidbody取得
                     Rigidbody rb = objects[circleObjIdx].GetComponent<Rigidbody>();
 
                     //オブジェクトに放射状に力を加える
                     rb.AddForce(objVec * 100);
-
-                    // 作ったオブジェクトを一定時間後に消す
                     Destroy(objects[circleObjIdx], ObjDeleteTime);
+                    yield return new WaitForSeconds(WaitobjectTime);
+
+                }
+
+                    yield return new WaitForSeconds(WaitTime);
+
+                for (int circleObjIdx = 0; circleObjIdx < circleObjMaX; circleObjIdx++) { 
+                    for (int circleChildObjIdx = 0; circleChildObjIdx < circleObjMaX; circleChildObjIdx++)
+                    {
+                        // 正規化されたベクトル
+                        Vector3 objChildVec = new Vector3(
+                            CirclechildX(circleChildObjIdx, circleObjMaX, CircleDouble),
+                            CirclechildY(circleChildObjIdx, circleObjMaX, CircleDouble),
+                            0
+                        );
+
+                        // 周りの円の位置を計算
+                        Vector3 objChildPos = objects[circleObjIdx].gameObject.transform.position + objChildVec;
+
+                        // オブジェクトを生成
+                        childobjects[circleChildObjIdx] = Instantiate(useobjects, objChildPos, Quaternion.identity);
+                        //rigidbody取得
+                        Rigidbody rbc = childobjects[circleChildObjIdx].GetComponent<Rigidbody>();
+
+                        //オブジェクトに放射状に力を加える
+                        rbc.AddForce(objChildVec * 100);
+                        Destroy(childobjects[circleChildObjIdx], childObjDeleteTime);
+                        yield return new WaitForSeconds(WaitobjectTime/circleObjMaX);
+
+                    }
+                    //Debug.Log(objects[circleObjIdx].gameObject.transform.position);
+
+                    ////一回目に生成した円中心に再度描写
+                
+
+
                 }
             }
 
@@ -100,14 +129,31 @@ public class PrefabTest : MonoBehaviour
         float angle = circleObjNum * 360 / circleObjMaX;
         float x = Mathf.Sin(angle * (Mathf.PI / 180));
         return x * Double;
-        
+
     }
 
-    float CircleY(int circleObjNum, int circleObjMaX , int Double)
+    float CircleY(int circleObjNum, int circleObjMaX, int Double)
     {
         float angle = circleObjNum * 360 / circleObjMaX;
         float y = Mathf.Cos(angle * (Mathf.PI / 180));
         return y * Double;
-       
+
+    }
+
+
+    float CirclechildX(int circleObjNum, int circleObjMaX, int Double)
+    {
+        float angle = circleObjNum * 360 / circleObjMaX + 360 / circleObjMaX / 2;
+        float x = Mathf.Sin(angle * (Mathf.PI / 180));
+        return x * Double;
+
+    }
+
+    float CirclechildY(int circleObjNum, int circleObjMaX, int Double)
+    {
+        float angle = circleObjNum * 360 / circleObjMaX + 360 / circleObjMaX / 2;
+        float y = Mathf.Cos(angle * (Mathf.PI / 180));
+        return y * Double;
+
     }
 }
