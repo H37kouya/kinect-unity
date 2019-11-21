@@ -8,10 +8,10 @@ public class shooting : MonoBehaviour
     public GameObject bullet;
     public Transform player;
     public float speed = 1000;
-    private float nowtime = 0.0f; 
+    private float nowtime = 0.0f;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
