@@ -104,5 +104,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c781396bc06fcec4a96d5b77f3b98117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.01
+  duration: 10
   cube1: {fileID: 6919340603605068923}
