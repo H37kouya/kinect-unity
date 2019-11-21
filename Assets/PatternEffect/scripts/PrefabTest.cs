@@ -24,7 +24,7 @@ public class PrefabTest : MonoBehaviour
             useobjects = (GameObject)Resources.Load("MovingCreate");
             objects[i] = Instantiate(useobjects, PlayerPos, Quaternion.identity);
             objects[i].transform.Rotate(0, 0, i * 10);
-           // rb[i] = objects[i].GetComponent<Rigidbody>();
+            rb[i] = objects[i].GetComponent<Rigidbody>();
 
         }
        
@@ -35,12 +35,11 @@ public class PrefabTest : MonoBehaviour
     {
         time += Time.deltaTime;
 
-            StartCoroutine("CreateObj");
+            
        
         for (int i=0; i < 100; i++)
         {
-            // objects[i].gameObject.transform.Translate(1.0f, 0.5f, 0);
-            //objects[i].transform.Rotate(new Vector3(i*10, 30, 1));
+            
             //Vector3 PlayerPos = Player.gameObject.transform.position;
             //useobjects = (GameObject)Resources.Load("MovingCreate");
             //objects[i] = Instantiate(useobjects, PlayerPos, Quaternion.identity);
@@ -52,6 +51,7 @@ public class PrefabTest : MonoBehaviour
             //objects[i].gameObject.transform.Translate(objects[i].transform.right);//物体正面(初期位置z軸方向)から見て右に移動
         }
 
+        StartCoroutine("CreateObj");
     }
 
     IEnumerator CreateObj()
