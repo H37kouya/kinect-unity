@@ -100,7 +100,6 @@ public class PrefabTest : MonoBehaviour
         float angle = circleObjNum * 360 / circleObjMaX;
         float x = Mathf.Sin(angle * (Mathf.PI / 180));
         return x * Double;
-
     }
 
     float CircleY(int circleObjNum, int circleObjMaX, int Double)
@@ -108,6 +107,5 @@ public class PrefabTest : MonoBehaviour
         float angle = circleObjNum * 360 / circleObjMaX;
         float y = Mathf.Cos(angle * (Mathf.PI / 180));
         return y * Double;
-
     }
 }
