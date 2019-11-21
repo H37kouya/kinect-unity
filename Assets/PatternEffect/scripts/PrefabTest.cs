@@ -23,7 +23,7 @@ public class PrefabTest : MonoBehaviour
         childobjects = new GameObject[50];
 
         time = 0.0f;
-        
+
         // circle 生成処理
         StartCoroutine("OnCreateCircle");
     }
@@ -37,12 +37,13 @@ public class PrefabTest : MonoBehaviour
     {
         // このコルーチンの処理を待たせる時間
         float WaitTime = 0.1f;
+        float AllWaitTime = 1f;
         float WaitobjectTime = 0.05f;
         // オブジェクトを削除する時間
         float ObjDeleteTime = WaitTime * 11f;
         float childObjDeleteTime = WaitTime * 10.05f;
         // 周りに生成するオブジェクト数
-        int circleObjMaX = 6;
+        int circleObjMaX = 3;
         //円の大きさ
         int CircleDouble = 2;
 
@@ -85,9 +86,10 @@ public class PrefabTest : MonoBehaviour
 
                 }
 
-                    yield return new WaitForSeconds(WaitTime);
+                yield return new WaitForSeconds(WaitTime);
 
-                for (int circleObjIdx = 0; circleObjIdx < circleObjMaX; circleObjIdx++) { 
+                for (int circleObjIdx = 0; circleObjIdx < circleObjMaX; circleObjIdx++)
+                {
                     for (int circleChildObjIdx = 0; circleChildObjIdx < circleObjMaX; circleChildObjIdx++)
                     {
                         // 正規化されたベクトル
@@ -108,19 +110,19 @@ public class PrefabTest : MonoBehaviour
                         //オブジェクトに放射状に力を加える
                         rbc.AddForce(objChildVec * 100);
                         Destroy(childobjects[circleChildObjIdx], childObjDeleteTime);
-                        yield return new WaitForSeconds(WaitobjectTime/circleObjMaX);
+                        yield return new WaitForSeconds(WaitobjectTime / circleObjMaX);
 
                     }
                     //Debug.Log(objects[circleObjIdx].gameObject.transform.position);
 
                     ////一回目に生成した円中心に再度描写
-                
+
 
 
                 }
             }
 
-            yield return new WaitForSeconds(WaitTime); // n 秒処理を待つ
+            yield return new WaitForSeconds(AllWaitTime); // n 秒処理を待つ
         }
     }
 
