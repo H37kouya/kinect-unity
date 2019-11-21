@@ -11,76 +11,82 @@ public class PrefabTest : MonoBehaviour
     private Quaternion[] forwardAxis;
     private Rigidbody[] rb;
 
+    private int count;
+
     // Use this for initialization
     void Start()
     {
-       
+
         objects = new GameObject[100];
         rb = new Rigidbody[100];
-       // useobjects = new GameObject[24];
-        for (int i = 0; i < 100; i++)
-        {
-            Vector3 PlayerPos = Player.gameObject.transform.position;
-            useobjects = (GameObject)Resources.Load("MovingCreate");
-            objects[i] = Instantiate(useobjects, PlayerPos, Quaternion.identity);
-            objects[i].transform.Rotate(0, 0, i * 10);
-           // rb[i] = objects[i].GetComponent<Rigidbody>();
 
-        }
-       
         time = 0.0f;
+
+        // circle 生成処理
+        StartCoroutine("OnCreateCircle");
     }
 
     void Update()
     {
         time += Time.deltaTime;
-
-            StartCoroutine("CreateObj");
-       
-        for (int i=0; i < 100; i++)
-        {
-            // objects[i].gameObject.transform.Translate(1.0f, 0.5f, 0);
-            //objects[i].transform.Rotate(new Vector3(i*10, 30, 1));
-            //Vector3 PlayerPos = Player.gameObject.transform.position;
-            //useobjects = (GameObject)Resources.Load("MovingCreate");
-            //objects[i] = Instantiate(useobjects, PlayerPos, Quaternion.identity);
-            //objects[i].transform.Rotate(0, 0, i * 10);
-
-
-
-
-            //objects[i].gameObject.transform.Translate(objects[i].transform.right);//物体正面(初期位置z軸方向)から見て右に移動
-        }
-
     }
 
-    IEnumerator CreateObj()
+    IEnumerator OnCreateCircle()
     {
-       
-        for ( int i = 0; i < 100; i++)
+        // このコルーチンの処理を待たせる時間
+        float WaitTime = 0.5f;
+        // オブジェクトを削除する時間
+        float ObjDeleteTime = WaitTime * 1.05f;
+        // 周りに生成するオブジェクト数
+        int circleObjMaX = 12;
+
+        // プレイヤーの座標取得
+        Vector3 PlayerPos = Player.gameObject.transform.position;
+
+        while (true)
         {
-            if (true)
+            if (PlayerPos != Player.gameObject.transform.position)
             {
+                // プレイヤーの座標取得 (更新)
+                PlayerPos = Player.gameObject.transform.position;
 
-                //if (rb[i].IsSleeping())
-                //{
-                //    Vector3 PlayerPos = Player.gameObject.transform.position;
-                //    useobjects = (GameObject)Resources.Load("MovingCreate");
-                //    objects[i] = Instantiate(useobjects, PlayerPos, Quaternion.identity);
-                //    objects[i].transform.Rotate(0, 0, i * 10);
-                //}
+                // 周りのオブジェクトを生成
+                for (int circleObjIdx = 0; circleObjIdx < circleObjMaX; circleObjIdx++)
+                {
+                    useobjects = (GameObject)Resources.Load("MovingCreate");
 
+                    // 周りの円の位置を計算
+                    Vector3 objectsVec = new Vector3(
+                        PlayerPos.x + CircleX(circleObjIdx, circleObjMaX),
+                        PlayerPos.y + CircleY(circleObjIdx, circleObjMaX),
+                        PlayerPos.z
+                    );
 
+                    // オブジェクトを生成
+                    objects[circleObjIdx] = Instantiate(useobjects, objectsVec, Quaternion.identity);
 
-                objects[i].gameObject.transform.Translate(objects[i].transform.right);
-
-                yield return new WaitForSeconds(0.1f);
+                    // 作ったオブジェクトを一定時間後に消す
+                    Destroy(objects[circleObjIdx], ObjDeleteTime);
+                }
             }
-            else
-            {
-                break;
-            }
+
+            yield return new WaitForSeconds(WaitTime); // n 秒処理を待つ
         }
     }
 
+    float CircleX(int circleObjNum, int circleObjMaX)
+    {
+        float angle = circleObjNum * 360 / circleObjMaX;
+        float x = Mathf.Sin(angle * (Mathf.PI / 180));
+        float n = 2.0f; // 倍率
+        return x * n;
+    }
+
+    float CircleY(int circleObjNum, int circleObjMaX)
+    {
+        float angle = circleObjNum * 360 / circleObjMaX;
+        float y = Mathf.Cos(angle * (Mathf.PI / 180));
+        float n = 2.0f; // 倍率
+        return y * n;
+    }
 }
