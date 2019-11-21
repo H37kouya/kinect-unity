@@ -39,6 +39,8 @@ public class PrefabTest : MonoBehaviour
         float ObjDeleteTime = WaitTime * 1.05f;
         // 周りに生成するオブジェクト数
         int circleObjMaX = 12;
+        //円の大きさ
+        int CircleDouble = 2;
 
         // プレイヤーの座標取得
         Vector3 PlayerPos = Player.gameObject.transform.position;
@@ -55,15 +57,34 @@ public class PrefabTest : MonoBehaviour
                 {
                     useobjects = (GameObject)Resources.Load("MovingCreate");
 
+                    // 正規化されたベクトル
+                    Vector3 objVec = new Vector3(
+                        CircleX(circleObjIdx, circleObjMaX, CircleDouble),
+                        CircleY(circleObjIdx, circleObjMaX, CircleDouble),
+                        0
+                    ); // = Relativevec
+
                     // 周りの円の位置を計算
-                    Vector3 objectsVec = new Vector3(
-                        PlayerPos.x + CircleX(circleObjIdx, circleObjMaX),
-                        PlayerPos.y + CircleY(circleObjIdx, circleObjMaX),
-                        PlayerPos.z
-                    );
+                    Vector3 objPos = PlayerPos + objVec; // = objectsVec
+                    
+                    // 周りの円の位置を計算
+                    //Vector3 objectsVec = new Vector3(
+                    //    PlayerPos.x + CircleX(circleObjIdx, circleObjMaX, CircleDouble),
+                    //    PlayerPos.y + CircleY(circleObjIdx, circleObjMaX, CircleDouble),
+                    //    PlayerPos.z
+                    //);
+
+                    //playerから見たオブジェクトの向きベクトル
+                    // Vector3 Relativevec = objectsVec - PlayerPos;
 
                     // オブジェクトを生成
-                    objects[circleObjIdx] = Instantiate(useobjects, objectsVec, Quaternion.identity);
+                    objects[circleObjIdx] = Instantiate(useobjects, objPos, Quaternion.identity);
+
+                    //rigidbody取得
+                    Rigidbody rb = objects[circleObjIdx].GetComponent<Rigidbody>();
+
+                    //オブジェクトに放射状に力を加える
+                    rb.AddForce(objVec * 100);
 
                     // 作ったオブジェクトを一定時間後に消す
                     Destroy(objects[circleObjIdx], ObjDeleteTime);
@@ -74,19 +95,19 @@ public class PrefabTest : MonoBehaviour
         }
     }
 
-    float CircleX(int circleObjNum, int circleObjMaX)
+    float CircleX(int circleObjNum, int circleObjMaX, int Double)
     {
         float angle = circleObjNum * 360 / circleObjMaX;
         float x = Mathf.Sin(angle * (Mathf.PI / 180));
-        float n = 2.0f; // 倍率
-        return x * n;
+        return x * Double;
+        
     }
 
-    float CircleY(int circleObjNum, int circleObjMaX)
+    float CircleY(int circleObjNum, int circleObjMaX , int Double)
     {
         float angle = circleObjNum * 360 / circleObjMaX;
         float y = Mathf.Cos(angle * (Mathf.PI / 180));
-        float n = 2.0f; // 倍率
-        return y * n;
+        return y * Double;
+       
     }
 }
