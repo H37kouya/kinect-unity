@@ -8,6 +8,7 @@ public class PrefabTest : MonoBehaviour
     public GameObject Player;
     public GameObject[] objects;
     public GameObject[] childobjects;
+    public int circleObjMaX;
     private GameObject useobjects;
     private Quaternion[] forwardAxis;
     private Rigidbody[] rb;
@@ -43,7 +44,7 @@ public class PrefabTest : MonoBehaviour
         float ObjDeleteTime = WaitTime * 11f;
         float childObjDeleteTime = WaitTime * 10.05f;
         // 周りに生成するオブジェクト数
-        int circleObjMaX = 3;
+       // int circleObjMaX = 3;
         //円の大きさ
         int CircleDouble = 2;
 
