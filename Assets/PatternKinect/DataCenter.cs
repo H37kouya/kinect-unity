@@ -18,7 +18,12 @@ public static class DataCenter
     }
 
     public static int JointNumber;
+
     public static bool[] IsDetected;
+
+    public static bool WaitingDisplay = true;
+
+    public static bool WebSender = false;
 
     public static bool IsAllDetected()
     {

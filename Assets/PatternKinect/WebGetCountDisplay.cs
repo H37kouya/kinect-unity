@@ -5,39 +5,25 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
-public class PeopleCounter : MonoBehaviour
+public class WebGetCountDisplay : MonoBehaviour
 {
     public Text CounterDisplay;
 
     public const string URL = "http://localhost/UnityCount/public/api/get-people-count";
 
-    public bool WebSenderCheck = false;
-
-    public float nowTime;
-
-    public float pollingTime = 60.0f;
+    public const float pollingTime = 60.0f;
 
     void Start()
     {
         StartCoroutine("OnGetStart");
-        // StartCoroutine("OnGetBytoday", URL);
     }
 
     IEnumerator OnGetStart()
     {
-        bool startSender = true;
-
         while (true)
         {
-            if (DataCenter.WebSender && startSender)
-            {
-                DataCenter.WebSender = false;
-                StartCoroutine("OnGetBytoday", URL);
-                startSender = false;
-            }
-
-
-            yield return new WaitForSeconds(10.0f);
+            StartCoroutine("OnGetBytoday", URL);
+            yield return new WaitForSeconds(pollingTime);
         }
     }
 
@@ -57,14 +43,12 @@ public class PeopleCounter : MonoBehaviour
         {
             //通信失敗
             Debug.Log(webRequest.error);
-            WebSenderCheck = true;
         }
         else
         {
             //通信成功
             Debug.Log(webRequest.downloadHandler.text);
             CounterDisplay.text = "今日の来訪者数: " + webRequest.downloadHandler.text + "人";
-            WebSenderCheck = true;
         }
     }
 
@@ -84,14 +68,12 @@ public class PeopleCounter : MonoBehaviour
         {
             //通信失敗
             Debug.Log(webRequest.error);
-            WebSenderCheck = true;
         }
         else
         {
             //通信成功
             Debug.Log(webRequest.downloadHandler.text);
             CounterDisplay.text = "今日の来訪者数: " + webRequest.downloadHandler.text + "人";
-            WebSenderCheck = true;
         }
     }
 }

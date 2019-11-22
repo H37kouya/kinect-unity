@@ -24,14 +24,20 @@ public class WaitingDisplay : MonoBehaviour
             if (DataCenter.IsAllDetected())
             {
                 WaitingDisplayObj.SetActive(false);
+
+                if (DataCenter.WaitingDisplay)
+                {
+                    DataCenter.WaitingDisplay = false;
+                    DataCenter.WebSender = true;
+                }
             }
             else
             {
                 // 感知されなかったときに起動
                 yield return new WaitForSeconds(WaitTime);
 
-                Debug.Log("ON");
                 WaitingDisplayObj.SetActive(true);
+                DataCenter.WaitingDisplay = true;
             }
 
             yield return new WaitForSeconds(WaitTime);
