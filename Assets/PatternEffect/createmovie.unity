@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -364,6 +364,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450932545}
   - component: {fileID: 450932544}
+  - component: {fileID: 450932546}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -378,7 +379,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450932543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 270bf57c22bf57443845c38b07e788fa, type: 3}
   m_Name: 
@@ -401,6 +402,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &450932546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450932543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c78092165bb998441b41d9adc4fbea0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaitTime: 0.5
+  AllWaitTime: 1
+  WaitobjectTime: 0.05
+  objects: []
+  childobjects: []
+  JointNumber: 0
+  ObjDeleteTime: 0
+  childObjDeleteTime: 0
+  circleObjMax: 3
+  BaseObj: {fileID: 274514487}
 --- !u!1001 &699470768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -567,6 +590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotatespeed: 2
   CameraAxisObject: {fileID: 820650505}
+  Rotateparameter: {fileID: 0}
 --- !u!1 &825031633
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotatespeed: 3
   CameraAxisObject: {fileID: 820650505}
+  Rotateparameter: {fileID: 0}
 --- !u!4 &1266239525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3388458395635056346, guid: 767c9affec1fcea4ca61fe18e51c7bdd,

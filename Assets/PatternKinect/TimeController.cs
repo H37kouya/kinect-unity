@@ -9,10 +9,33 @@ public class TimeController : MonoBehaviour
 
     // 現在時刻を更新する間隔
     public float GetTimeDiff = 10.0f;
+    public float ModeChangeDiff = 5.0f;
 
     void Start()
     {
+        StartCoroutine("ModeChange");
         StartCoroutine("TimeOn");
+    }
+
+    IEnumerator ModeChange()
+    {
+        while (true)
+        {
+            int nowTime = getTimeInt("m");
+            ModeChangeDiff = 30 - nowTime;
+
+            if (0 <= nowTime && nowTime < 30)
+            {
+                DataCenter.GameMode = 1;
+            }
+
+            if (30 <= nowTime)
+            {
+                DataCenter.GameMode = 2;
+            }
+
+            yield return new WaitForSeconds(ModeChangeDiff);
+        }
     }
 
     IEnumerator TimeOn()
