@@ -65,9 +65,23 @@ public class KinectJoint : MonoBehaviour
         // output the joint position for easy tracking
         Vector3 jointPos = manager.GetJointPosition(userId, JointKinectNumber);
         // 座標の補正をする
-        Vector3 correctionPos = new Vector3(jointPos.x * correctionX, jointPos.y * correctionY, jointPos.z);
+        Vector3 correctionPos = JointPosObjByFirstFunction(jointPos);
         // 関節のpositionを更新
         KinectJointObject.transform.localPosition = correctionPos;
+    }
+
+    Vector3 JointPosObjByFirstFunction(Vector3 jointPos)
+    {
+        return new Vector3(jointPos.x * correctionX, jointPos.y * correctionY, jointPos.z);
+    }
+
+    Vector3 JointPosObjByThreeFunction(Vector3 jointPos)
+    {
+        return new Vector3(
+            Mathf.Pow(jointPos.x, 3) * correctionX,
+            Mathf.Pow(jointPos.y, 3) * correctionY,
+            jointPos.z
+        );
     }
 
     // 人を感知したかどうかをセットする
