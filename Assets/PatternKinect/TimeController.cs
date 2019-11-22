@@ -11,6 +11,10 @@ public class TimeController : MonoBehaviour
     public float GetTimeDiff = 10.0f;
     public float ModeChangeDiff = 5.0f;
 
+    public Light DirectionalLight;
+    public Light PointLight;
+    public Light PointLight2;
+
     void Start()
     {
         StartCoroutine("ModeChange");
@@ -101,10 +105,15 @@ public class TimeController : MonoBehaviour
     }
     void Gamemode1set()
     {
+        DirectionalLight.intensity = 0;
+        PointLight.intensity = 6;
+        PointLight2.intensity = 6;
 
     }
     void Gamemode2set()
     {
-
+        DirectionalLight.intensity = 1;
+        PointLight.intensity = 0;
+        PointLight2.intensity = 0;
     }
 }
