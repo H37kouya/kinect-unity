@@ -26,11 +26,13 @@ public class TimeController : MonoBehaviour
 
             if (0 <= nowTime && nowTime < 30)
             {
+                Gamemode1set();
                 DataCenter.GameMode = 1;
             }
 
             if (30 <= nowTime)
             {
+                Gamemode2set();
                 DataCenter.GameMode = 2;
             }
 
@@ -96,5 +98,13 @@ public class TimeController : MonoBehaviour
         }
 
         return System.DateTime.Now.Second;
+    }
+    void Gamemode1set()
+    {
+
+    }
+    void Gamemode2set()
+    {
+
     }
 }
