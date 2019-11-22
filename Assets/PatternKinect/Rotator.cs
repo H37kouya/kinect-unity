@@ -17,14 +17,13 @@ public class Rotator : MonoBehaviour
     {
         while (true)
         {
-            if (DataCenter.IsAllDetected())
+            if (DataCenter.IsAllDetected() && DataCenter.GameMode == 2)
             {
                 // float angle = (Input.GetAxis("Vertical") == 0 ?  Input.GetAxis("Horizontal") : Input.GetAxis("Vertical"))  * rotatespeed;
                 // カメラのオブジェクト
                 Vector3 Axis = CameraAxisObject.transform.position;
                 // 左手のオブジェクト
                 Vector3 rotateparrameter = Rotateparameter.transform.position;
-                Debug.Log(rotateparrameter.y);
                 if (rotateparrameter.y < 13)
                 {
                     rotateparrameter.y *= -1;

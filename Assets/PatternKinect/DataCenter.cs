@@ -27,6 +27,9 @@ public static class DataCenter
     public static bool WaitingDisplay = true;
     // web 送信してほしいかどうか
     public static bool WebSender = false;
+
+    // ゲームのモード
+    public static int GameMode = 1;
     // 一つでもいいので、関節が動いたかどうか
     public static bool IsAllDetected()
     {
