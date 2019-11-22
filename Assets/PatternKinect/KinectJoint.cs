@@ -70,6 +70,7 @@ public class KinectJoint : MonoBehaviour
         KinectJointObject.transform.localPosition = correctionPos;
     }
 
+    // 人を感知したかどうかをセットする
     void SetIsDetected(bool _IsDetected)
     {
         IsDetected = _IsDetected; // このオブジェクト内の IsDetected を更新
