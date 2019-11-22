@@ -31,6 +31,12 @@ public class PatternEffectController : MonoBehaviour
     public GameObject Cube18;
     public GameObject Cube19;
 
+    public GameObject[] objects;
+    private GameObject useobjects;
+    private Rigidbody[] rb;
+    private Quaternion[] forwardAxis;
+
+
     public Text TimerDisplay;
 
     public GameObject[] PatternObject;
@@ -82,6 +88,12 @@ public class PatternEffectController : MonoBehaviour
         VisibleTime = new float[PatternObject.Length];
         VisibleTimeBool = new bool[PatternObject.Length];
         outputPositions = new Vector3[PatternObject.Length];
+
+        objects = new GameObject[100];
+        rb = new Rigidbody[100];
+
+        // circle 生成処理
+        StartCoroutine("OnCreateCircle");
 
         // 配列を既定の値で初期化
         for (int i = 0; i < PatternObject.Length; i++)
@@ -176,6 +188,22 @@ public class PatternEffectController : MonoBehaviour
                 // outputPositions[joint] = jointPos;
             }
         }
+    }
+
+    // 円の x 座標を取得
+    float CircleX(int circleObjNum, int circleObjMaX, int Double)
+    {
+        float angle = circleObjNum * 360 / circleObjMaX;
+        float x = Mathf.Sin(angle * (Mathf.PI / 180));
+        return x * Double;
+    }
+
+    // 円の y 座標を取得
+    float CircleY(int circleObjNum, int circleObjMaX, int Double)
+    {
+        float angle = circleObjNum * 360 / circleObjMaX;
+        float y = Mathf.Cos(angle * (Mathf.PI / 180));
+        return y * Double;
     }
 
     // PatternObjectの表示
@@ -332,6 +360,65 @@ public class PatternEffectController : MonoBehaviour
             StartCoroutine("OnSend", URL); // web に post するコルーチンの呼び出し
         }
     }
+
+    IEnumerator OnCreateCircle()
+    {
+        // このコルーチンの処理を待たせる時間
+        float WaitTime = 0.5f;
+        // オブジェクトを削除する時間
+        float ObjDeleteTime = WaitTime * 1.05f;
+        // 周りに生成するオブジェクト数
+        int circleObjMaX = 12;
+        //円の大きさ
+        int CircleDouble = 2;
+
+        GameObject Player = PatternObject[1];
+
+        // プレイヤーの座標取得
+        Vector3 PlayerPos = Player.gameObject.transform.position;
+
+        while (true)
+        {
+            if (PlayerPos != Player.gameObject.transform.position)
+            {
+                // プレイヤーの座標取得 (更新)
+                PlayerPos = Player.gameObject.transform.position;
+
+                // 周りのオブジェクトを生成
+                for (int circleObjIdx = 0; circleObjIdx < circleObjMaX; circleObjIdx++)
+                {
+                    useobjects = (GameObject)Resources.Load("MovingCreate");
+
+                    // 正規化されたベクトル
+                    Vector3 objVec = new Vector3(
+                        CircleX(circleObjIdx, circleObjMaX, CircleDouble),
+                        CircleY(circleObjIdx, circleObjMaX, CircleDouble),
+                        0
+                    ); // = Relativevec
+
+                    // 周りの円の位置を計算
+                    Vector3 objPos = PlayerPos + objVec; // = objectsVec
+
+                    // オブジェクトを生成
+                    objects[circleObjIdx] = Instantiate(useobjects, objPos, Quaternion.identity);
+
+                    //オブジェクトに放射状に力を加える
+                    if (circleObjIdx == 1)
+                    {
+                        //rigidbody取得
+                        Rigidbody rb = objects[circleObjIdx].GetComponent<Rigidbody>();
+                        rb.AddForce(objVec * 100);
+                    }
+
+                    // 作ったオブジェクトを一定時間後に消す
+                    Destroy(objects[circleObjIdx], ObjDeleteTime);
+                }
+            }
+
+            yield return new WaitForSeconds(WaitTime); // n 秒処理を待つ
+        }
+    }
+
 
     // web 送信用のコルーチン
     IEnumerator OnSend(string url)
