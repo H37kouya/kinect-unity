@@ -16,7 +16,7 @@ Description will be added later.
 |  No |  Name | 日本語名 |
 |:----|:------|:--------|
 |  0  |  Hip_Center  |  お尻|
-|  1  |  Spine  | 脊髄 |
+|  1  |  Spine  | 脊髄(腰) |
 |  2  |  Shoulder_Center | 首と肩の間 |
 |  3  |  Head  | 頭 |
 |  4  |  Shoulder_Left  | 左肩 |
