@@ -26,7 +26,8 @@ public class TimeController : MonoBehaviour
 
             if (0 <= nowTime && nowTime < 30)
             {
-                DataCenter.GameMode = 1;
+                //DataCenter.GameMode = 1;
+                DataCenter.GameMode = 2;
             }
 
             if (30 <= nowTime)

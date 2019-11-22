@@ -8,7 +8,7 @@ public static class DataCenter
 {
     static DataCenter()
     {
-        JointNumber = 2;
+        JointNumber = 4;
 
         IsDetected = new bool[JointNumber];
         for (int i = 0; i < JointNumber; i++)
@@ -33,6 +33,6 @@ public static class DataCenter
     // 一つでもいいので、関節が動いたかどうか
     public static bool IsAllDetected()
     {
-        return IsDetected[0] || IsDetected[1];
+        return IsDetected[0] || IsDetected[1] || IsDetected[2] || IsDetected[3];
     }
 }
