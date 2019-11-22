@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2510717225906356406}
   - component: {fileID: 2560896126645934727}
   - component: {fileID: 2857940883044568579}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: MovingCreate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
