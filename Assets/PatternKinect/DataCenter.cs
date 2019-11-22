@@ -17,14 +17,17 @@ public static class DataCenter
         }
     }
 
+    // 使う関節の総数
     public static int JointNumber;
 
+    // 関節を感知したかどうか
     public static bool[] IsDetected;
 
+    // 待機画面起動中かどうか
     public static bool WaitingDisplay = true;
-
+    // web 送信してほしいかどうか
     public static bool WebSender = false;
-
+    // 一つでもいいので、関節が動いたかどうか
     public static bool IsAllDetected()
     {
         return IsDetected[0] || IsDetected[1];

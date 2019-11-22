@@ -28,7 +28,7 @@ public class CreateCircle : MonoBehaviour
 
     // 生成後の object の格納
     public GameObject[] objects;
-    private Quaternion[] forwardAxis;
+    // private Quaternion[] forwardAxis;
     // 生成した object のスクリプトの格納
     private Rigidbody[] rb;
 

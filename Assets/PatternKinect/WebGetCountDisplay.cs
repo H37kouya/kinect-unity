@@ -11,6 +11,7 @@ public class WebGetCountDisplay : MonoBehaviour
 
     public const string URL = "http://localhost/UnityCount/public/api/get-people-count";
 
+    // counter display の内容を更新する間隔
     public const float pollingTime = 60.0f;
 
     void Start()
