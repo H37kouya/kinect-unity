@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaitingText: {fileID: 53579330}
-  AnimationDiffTime: 10
+  AnimationDiffTime: 60
   angle: 20
   scaleLevel: 20
 --- !u!1001 &702631469
@@ -1103,7 +1103,7 @@ Transform:
   - {fileID: 404066470}
   - {fileID: 685528761}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1811257264
 GameObject:
@@ -1201,7 +1201,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2058745377
 GameObject:
