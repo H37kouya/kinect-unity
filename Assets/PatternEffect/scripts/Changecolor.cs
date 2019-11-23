@@ -16,7 +16,7 @@ public class Changecolor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        StartCoroutine("");
+
 
         colors = new Color[6, 2];
 
@@ -37,25 +37,30 @@ public class Changecolor : MonoBehaviour
         
         colors[5, 0] = CreateColor("fa", "70", "9a");
         colors[5, 1] = CreateColor("fe", "e1", "40");
+
+        StartCoroutine("OnChangeColor");
     }
 
     IEnumerator OnChangeColor()
     {
         int count = 0;
-        int countMax = 10;
+        int countMax = 10; //固定
 
         while (true)
         {
 
             if (DataCenter.IsAllDetected())
             {
-                //色をRGBではなくHSVで指定
-                cube1.GetComponent<Renderer>().material.color = GetColor(count, countMax);
-                count++;
-
-                if (count >= countMax)
+                while (true)
                 {
-                    count = 0;
+                    // 現在時刻 (秒)
+                    int second = System.DateTime.Now.Second;
+                    
+                    
+                    //色をRGBではなくHSVで指定
+                    cube1.GetComponent<Renderer>().material.color = GetColor(countMax, second);
+
+                    yield return new WaitForSeconds(1);
                 }
 
             }
@@ -67,16 +72,24 @@ public class Changecolor : MonoBehaviour
         }
     }
 
-    Color GetColor(int count, int countMax)
+    Color GetColor(int countMax, int second)
     {
-        int minute = System.DateTime.Now.Minute;
-        int colorNum = minute % 10;
-
+       
+        int colorNum = second / 10;
+        int secondfirst = second % 10;
+        Debug.Log(colorNum);
+        
+        // グラデーション用の色
         Color BeforeColor = colors[colorNum, 0];
         Color AfterColor = colors[colorNum, 1];
 
+        // カウントの刻み(1)
+        //float countDiff = count / countMax;
+
+        Color DifferColor = (AfterColor - BeforeColor) / (countMax - 1);
+
         // before と after でグラデーションを作る。毎秒ごとに色変化。
-        Color ResultColor = new Color();
+        Color ResultColor = BeforeColor + DifferColor * secondfirst; 
        
         return ResultColor;
     }

@@ -11,6 +11,10 @@ public class TimeController : MonoBehaviour
     public float GetTimeDiff = 10.0f;
     public float ModeChangeDiff = 5.0f;
 
+    public Light DirectionalLight;
+    public Light PointLight;
+    public Light PointLight2;
+
     void Start()
     {
         StartCoroutine("ModeChange");
@@ -26,11 +30,13 @@ public class TimeController : MonoBehaviour
 
             if (0 <= nowTime && nowTime < 30)
             {
+                Gamemode1set();
                 DataCenter.GameMode = 1;
             }
 
             if (30 <= nowTime)
             {
+                Gamemode2set();
                 DataCenter.GameMode = 2;
             }
 
@@ -96,5 +102,18 @@ public class TimeController : MonoBehaviour
         }
 
         return System.DateTime.Now.Second;
+    }
+    void Gamemode1set()
+    {
+        DirectionalLight.intensity = 0;
+        PointLight.intensity = 6;
+        PointLight2.intensity = 6;
+
+    }
+    void Gamemode2set()
+    {
+        DirectionalLight.intensity = 1;
+        PointLight.intensity = 0;
+        PointLight2.intensity = 0;
     }
 }
