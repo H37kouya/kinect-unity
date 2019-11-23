@@ -30,17 +30,15 @@ public class TimeController : MonoBehaviour
             int nowTime = getTimeInt("m");
             ModeChangeDiff = 30 - nowTime;
 
-            if (0 <= nowTime && nowTime < 30)
+            if (0 <= nowTime && nowTime < 20)
             {
                 Gamemode1set();
-
                 DataCenter.GameMode = 1;
             }
 
-            if (30 <= nowTime)
+            if (20 <= nowTime)
             {
                 Gamemode2set();
-
                 DataCenter.GameMode = 2;
             }
 
@@ -120,7 +118,7 @@ public class TimeController : MonoBehaviour
         DirectionalLight.intensity = 1;
         PointLight.intensity = 0;
         PointLight2.intensity = 0;
-        SetText("今は左手を上下に動かしてみよう！腰が基準だよ");
+        SetText("今は左手を上下に動かしてみよう！左肘が基準だよ");
     }
 
     void SetText(string str)
