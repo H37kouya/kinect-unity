@@ -8,13 +8,16 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/PatternEffect/minigame.unity
     guid: 5d09dede86b90304691539f1a62f4f7a
-  - enabled: 1
+  - enabled: 0
     path: Assets/PatternEffect/Result.unity
     guid: 522774d179950d74cb7bc020ff910e1a
-  - enabled: 1
+  - enabled: 0
     path: Assets/PatternEffect/Waiting.unity
     guid: 9051faa3607104241ab9f20c64f60fe7
+  - enabled: 1
+    path: Assets/PatternKinect/PatternKinect.unity
+    guid: ac304100b3f2b3d45b40196ab68c2731
   m_configObjects: {}

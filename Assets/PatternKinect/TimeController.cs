@@ -6,6 +6,8 @@ using System.Collections;
 public class TimeController : MonoBehaviour
 {
     public Text TimePanelText;
+    // 説明文
+    public Text ExampleText;
 
     // 現在時刻を更新する間隔
     public float GetTimeDiff = 10.0f;
@@ -31,12 +33,14 @@ public class TimeController : MonoBehaviour
             if (0 <= nowTime && nowTime < 30)
             {
                 Gamemode1set();
+
                 DataCenter.GameMode = 1;
             }
 
             if (30 <= nowTime)
             {
                 Gamemode2set();
+
                 DataCenter.GameMode = 2;
             }
 
@@ -108,6 +112,7 @@ public class TimeController : MonoBehaviour
         DirectionalLight.intensity = 0;
         PointLight.intensity = 6;
         PointLight2.intensity = 6;
+        SetText("今は両手を横に動かしてみよう！");
 
     }
     void Gamemode2set()
@@ -115,5 +120,11 @@ public class TimeController : MonoBehaviour
         DirectionalLight.intensity = 1;
         PointLight.intensity = 0;
         PointLight2.intensity = 0;
+        SetText("今は左手を上下に動かしてみよう！腰が基準だよ");
+    }
+
+    void SetText(string str)
+    {
+        ExampleText.text = str;
     }
 }
