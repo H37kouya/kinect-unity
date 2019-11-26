@@ -1,15 +1,21 @@
 # kinect-unity
 
-## description
+## Description
 
 Description will be added later.
+
+## Environment
+
+- Unity 2018.3.7f1
+
+※ APIの詳細は [H37kouya/kinect-web-api](https://github.com/H37kouya/kinect-web-api)
 
 ## Installation
 
 - [download kinect SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
 - [download kinect ms-sdk](https://assetstore.unity.com/packages/tools/kinect-with-ms-sdk-7747)
 
-## documentation
+## Documentation
 
 ### Joint Name and Number
 
