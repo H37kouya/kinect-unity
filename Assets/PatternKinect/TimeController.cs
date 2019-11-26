@@ -16,6 +16,11 @@ public class TimeController : MonoBehaviour
     public Light DirectionalLight;
     public Light PointLight;
     public Light PointLight2;
+    public Camera maincamera;
+
+    public GameObject righthand;
+    public GameObject lefthand;
+    public GameObject Movingcreate;
 
     void Start()
     {
@@ -51,11 +56,11 @@ public class TimeController : MonoBehaviour
         while (true)
         {
             GetTimeDiff = 10;
-            if (DataCenter.WaitingDisplay)
-            {
+            // if (DataCenter.WaitingDisplay)
+            // {
                 TimePanelText.text = "現在時刻: " + getTimeStr("h") + ":" + getTimeStr("m");
                 GetTimeDiff = 60 - getTimeInt("s");
-            }
+            // }
 
             yield return new WaitForSeconds(GetTimeDiff);
         }
@@ -111,6 +116,10 @@ public class TimeController : MonoBehaviour
         PointLight.intensity = 6;
         PointLight2.intensity = 6;
         SetText("今は両手を横に動かしてみよう！");
+        maincamera.cullingMask |= (1 << 9);
+        righthand.SetActive(true);
+        lefthand.SetActive(true);
+        Movingcreate.SetActive(false);
 
     }
     void Gamemode2set()
@@ -119,6 +128,12 @@ public class TimeController : MonoBehaviour
         PointLight.intensity = 0;
         PointLight2.intensity = 0;
         SetText("今は左手を上下に動かしてみよう！左肘が基準だよ");
+        maincamera.cullingMask &= ~(1 << 9);
+        righthand.SetActive(false);
+        lefthand.SetActive(false);
+        Movingcreate.SetActive(true);
+
+
     }
 
     void SetText(string str)

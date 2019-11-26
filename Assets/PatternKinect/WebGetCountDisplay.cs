@@ -70,7 +70,7 @@ public class WebGetCountDisplay : MonoBehaviour
         string requestUrl = url;
 
         //URLをGETで用意
-        UnityWebRequest webRequest = UnityWebRequest.Get(requestUrl + "?date='yesterday'");
+        UnityWebRequest webRequest = UnityWebRequest.Get(requestUrl + "?date=yesterday");
         //UnityWebRequestにバッファをセット
         webRequest.downloadHandler = new DownloadHandlerBuffer();
         //URLに接続して結果が戻ってくるまで待機

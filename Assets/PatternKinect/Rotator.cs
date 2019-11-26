@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,6 +18,8 @@ public class Rotator : MonoBehaviour
     public GameObject RotateParameter;
     //最大回転速度
     public float MoveRotateMultiplier;
+    public Text rotatejudge; 
+    public GameObject rotatejudgeObj;
 
     void Start()
     {
@@ -44,7 +47,6 @@ public class Rotator : MonoBehaviour
         {
             if (DataCenter.IsAllDetected() && DataCenter.GameMode == 2)
             {
-
                 // カメラのオブジェクトのポジション
                 Axis = CameraAxisObject.transform.position;
                 // 腰のオブジェクトのポジション
@@ -56,14 +58,21 @@ public class Rotator : MonoBehaviour
                 Rigidbody rotaterforce = this.GetComponent<Rigidbody>();
                 // 条件付きでvectorを判定する
                 Vector3 ForcePos = ReverseVecByBasePos(BaseRotateParameterPos, RotateParameterPos);
+                rotatejudgeObj.SetActive(true);
+                //rotate判定text
+                settext(ForcePos);
 
                 Vector3 TorqueNow = GetTorqueNow(ForcePos);
                 TorqueSpeed = Torque - TorqueNow;
                 Torque = TorqueNow;
-                rotaterforce.AddTorque(Torque); //MoveRotateMultiplier * (TorqueSpeed - rotaterforce.velocity));
+                if (rotaterforce.angularVelocity.z > -1 && rotaterforce.angularVelocity.z < 1)
+                {
+                    rotaterforce.AddTorque(Torque); //MoveRotateMultiplier * (TorqueSpeed - rotaterforce.velocity));
+                }
             }
             else
             {
+                rotatejudgeObj.SetActive(false);
                 yield return new WaitForSeconds(0.5f);
             }
 
@@ -124,5 +133,17 @@ public class Rotator : MonoBehaviour
         }
 
         return Vector3.forward * Mathf.PI * ForcePos.x * rotatespeed;
+    }
+    void settext(Vector3 flag)
+    {
+        if(flag.z < 0)
+        {
+            rotatejudge.text = "時計回りだよ";
+        }
+        else
+        {
+            rotatejudge.text = "反時計回りだよ";
+        }
+
     }
 }
