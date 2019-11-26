@@ -8,15 +8,18 @@ using System.Collections.Generic;
 public class WebGetCountDisplay : MonoBehaviour
 {
     public Text CounterDisplay;
+    public Text CounterDisplayYesterday;
 
     public const string URL = "http://localhost/UnityCount/public/api/get-people-count";
 
     // counter display の内容を更新する間隔
     public const float pollingTime = 60.0f;
+    public const float pollingTimeYesterday = 3600.0f;
 
     void Start()
     {
         StartCoroutine("OnGetStart");
+        StartCoroutine("OnGetStartYesterday");
     }
 
     IEnumerator OnGetStart()
@@ -25,6 +28,15 @@ public class WebGetCountDisplay : MonoBehaviour
         {
             StartCoroutine("OnGetBytoday", URL);
             yield return new WaitForSeconds(pollingTime);
+        }
+    }
+
+    IEnumerator OnGetStartYesterday()
+    {
+        while (true)
+        {
+            StartCoroutine("OnGetByYesterday", URL);
+            yield return new WaitForSeconds(pollingTimeYesterday);
         }
     }
 
@@ -58,7 +70,7 @@ public class WebGetCountDisplay : MonoBehaviour
         string requestUrl = url;
 
         //URLをGETで用意
-        UnityWebRequest webRequest = UnityWebRequest.Get(requestUrl + "?date='yesterday'");
+        UnityWebRequest webRequest = UnityWebRequest.Get(requestUrl + "?date=yesterday");
         //UnityWebRequestにバッファをセット
         webRequest.downloadHandler = new DownloadHandlerBuffer();
         //URLに接続して結果が戻ってくるまで待機
@@ -74,7 +86,7 @@ public class WebGetCountDisplay : MonoBehaviour
         {
             //通信成功
             Debug.Log(webRequest.downloadHandler.text);
-            CounterDisplay.text = "今日の来訪者数: " + webRequest.downloadHandler.text + "人";
+            CounterDisplayYesterday.text = "昨日の来訪者数: " + webRequest.downloadHandler.text + "人";
         }
     }
 }
