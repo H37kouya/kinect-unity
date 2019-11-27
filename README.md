@@ -2,22 +2,34 @@
 
 ## Description
 
-Description will be added later.
+This program was created for a university festival.
 
-## Environment
+In Unity, Draw a pattern using the coordinates acquired by Kinect.
+The pattern is changed by the change of coordinates.
+
+We have tried to make many modes.
+The following list is an example of Modes
+
+- When the time is 0 to 20 minutes, the pattern is changed according to the x coordinate of both hands.
+- When it is 20 to 60 minutes, the pattern is changed according to the y coordinate of the left hand.
+- If Person can't be detected Kinect, you can watch Waiting Display Mode.
+
+## Details
+
+### Environment
 
 - Unity 2018.3.7f1
 
 ※ APIの詳細は [H37kouya/kinect-web-api](https://github.com/H37kouya/kinect-web-api)
 
-## Installation
+### Installation
 
 - [download kinect SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
 - [download kinect ms-sdk](https://assetstore.unity.com/packages/tools/kinect-with-ms-sdk-7747)
 
-## Documentation
+### Documentation
 
-### Joint Name and Number
+#### Joint Name and Number
 
 |  No |  Name | 日本語名 |
 |:----|:------|:--------|
@@ -42,7 +54,7 @@ Description will be added later.
 |  18 |  Ankle_Right  | 右足首 |
 |  19 |  Foot_Right  | 右足 |
 
-## git operation
+### git operation
 
 ```
 # すべての変更を破棄してh37kouya/kinect-unity/masterに合わせる
