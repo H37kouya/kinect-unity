@@ -4,7 +4,7 @@
 
 This program was created for a university festival.
 
-In Unity, Draw a pattern using the coordinates acquired by Kinect.
+In Unity, Draw a pattern using the coordinates acquired by Kinect.  
 The pattern is changed by the change of coordinates.
 
 We have tried to make many modes.
@@ -20,7 +20,7 @@ The following list is an example of Modes
 
 - Unity 2018.3.7f1
 
-※ APIの詳細は [H37kouya/kinect-web-api](https://github.com/H37kouya/kinect-web-api)
+※ For details about WebApi, see [H37kouya/kinect-web-api](https://github.com/H37kouya/kinect-web-api)
 
 ### Installation
 
