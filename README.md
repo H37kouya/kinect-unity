@@ -31,14 +31,14 @@ The following list is an example of Modes
 
 #### Display Picture
 
-State of Display Mode
+State of Display Mode  
 ![待機画面の様子](./GithubStorage/待機画面.png "待機画面の様子")
 
-The Pattern by the y coordinate of the left hand
+The Pattern by the y coordinate of the left hand  
 ![左手を感知する模様1](./GithubStorage/左手を感知する模様1.png "左手を感知する模様1")
 ![左手を感知する模様2](./GithubStorage/左手を感知する模様2.png "左手を感知する模様2")
 
-The pattern by the x coordinate of both hands
+The pattern by the x coordinate of both hands  
 ![両腕を感知する模様1](./GithubStorage/両腕を感知する模様1.png "両腕を感知する模様1")
 ![両腕を感知する模様2](./GithubStorage/両腕を感知する模様2.png "両腕を感知する模様2")
 
