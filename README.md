@@ -79,7 +79,7 @@ git reset --hard h37kouya/kinect-unity/master
 git reset --hard remotes/origin/master
 ```
 
-## Wait a munite
+## Wait a minutes
 
 This program is very dirty.  
 This year, I'm going to remove files that don't need.
