@@ -70,11 +70,13 @@ public class KinectJoint : MonoBehaviour
         KinectJointObject.transform.localPosition = correctionPos;
     }
 
+    // 座標に対する補正のかけ方 (1次関数)
     Vector3 JointPosObjByFirstFunction(Vector3 jointPos)
     {
         return new Vector3(jointPos.x * correctionX, jointPos.y * correctionY, jointPos.z);
     }
 
+    // 座標に対する補正のかけ方 (3次関数)
     Vector3 JointPosObjByThreeFunction(Vector3 jointPos)
     {
         return new Vector3(
