@@ -83,18 +83,18 @@ public class CreateCircle : MonoBehaviour
     }
 
     // 円の x 座標を取得
-    float CircleX(int circleObjNum, int circleObjMax, int Double)
+    float CircleX(int circleObjNum, int circleObjMax, int radius)
     {
         float angle = circleObjNum * 360 / circleObjMax;
         float x = Mathf.Sin(angle * (Mathf.PI / 180));
-        return x * Double;
+        return x * radius;
     }
 
     // 円の y 座標を取得
-    float CircleY(int circleObjNum, int circleObjMax, int Double)
+    float CircleY(int circleObjNum, int circleObjMax, int radius)
     {
         float angle = circleObjNum * 360 / circleObjMax;
         float y = Mathf.Cos(angle * (Mathf.PI / 180));
-        return y * Double;
+        return y * radius;
     }
 }
