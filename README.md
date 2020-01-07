@@ -68,18 +68,6 @@ The pattern by the x coordinate of both hands
 |  18 |  Ankle_Right  | 右足首 |
 |  19 |  Foot_Right  | 右足 |
 
-### git operation
-
-```
-# すべての変更を破棄してh37kouya/kinect-unity/masterに合わせる
-
-git reset --hard h37kouya/kinect-unity/master
-
-// or
-
-git reset --hard remotes/origin/master
-```
-
 ## Wait a minutes
 
 This program is very dirty.  
