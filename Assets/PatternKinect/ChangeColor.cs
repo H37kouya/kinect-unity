@@ -7,7 +7,7 @@ using System.Globalization;
 public class ChangeColor : MonoBehaviour
 {
     // 色が変わるタイミング(時間)を「Cube」のInspector(Duration)で指定、初期値は1.0F
-    public float duration = 1.0F;
+    public float duration = 1.0f;
     // Hierarchyにある「Cube」を「Cube 1」にドラッグする(「Cube」のInspectorにあり)
     public GameObject cube1;
     // 色を変化させる時間
@@ -15,8 +15,38 @@ public class ChangeColor : MonoBehaviour
     // カラーリスト
     public Color[,] colors;
 
+    private int _countMax = 10;
+
     // Use this for initialization
     void Start()
+    {
+        ColorIntialize(); // 色の初期化
+        // コルーチンスタート
+        StartCoroutine("OnChangeColor");
+    }
+
+    IEnumerator OnChangeColor()
+    {
+        while (true)
+        {
+            if (DataCenter.IsAllDetected())
+            {
+                // 現在時刻 (秒)
+                int _second = System.DateTime.Now.Second;
+
+                // 色を RGB ではなく HSV で指定
+                cube1.GetComponent<Renderer>().material.color = GetColor(_second);
+                yield return new WaitForSeconds(1);
+            }
+            else
+            {
+                yield return new WaitForSeconds(TimeDiff);
+            }
+        }
+    }
+
+    // color の初期化
+    void ColorIntialize()
     {
         colors = new Color[6, 2];
 
@@ -37,48 +67,6 @@ public class ChangeColor : MonoBehaviour
 
         colors[5, 0] = CreateColor("fa", "70", "9a");
         colors[5, 1] = CreateColor("fe", "e1", "40");
-
-        StartCoroutine("OnChangeColor");
-    }
-
-    IEnumerator OnChangeColor()
-    {
-        int countMax = 10; // 固定
-
-        while (true)
-        {
-            if (DataCenter.IsAllDetected())
-            {
-                // 現在時刻 (秒)
-                int second = System.DateTime.Now.Second;
-
-                // 色を RGB ではなく HSV で指定
-                cube1.GetComponent<Renderer>().material.color = GetColor(countMax, second);
-                yield return new WaitForSeconds(1);
-            }
-            else
-            {
-                yield return new WaitForSeconds(TimeDiff);
-            }
-        }
-    }
-
-    Color GetColor(int countMax, int second)
-    {
-        int colorNum = second / 10;
-        int secondfirst = second % 10;
-
-        // グラデーション用の色
-        Color BeforeColor = colors[colorNum, 0];
-        Color AfterColor = colors[colorNum, 1];
-
-        // カウントの刻み
-        Color DifferColor = (AfterColor - BeforeColor) / (countMax - 1);
-
-        // before と after でグラデーションを作る。毎秒ごとに色変化。
-        Color ResultColor = BeforeColor + DifferColor * secondfirst;
-
-        return ResultColor;
     }
 
     // 16 進数の色コードを c# 用に変更
@@ -89,5 +77,24 @@ public class ChangeColor : MonoBehaviour
             (float)int.Parse(g, NumberStyles.AllowHexSpecifier) / 255,
             (float)int.Parse(b, NumberStyles.AllowHexSpecifier) / 255
         );
+    }
+
+    // 色の生成
+    Color GetColor(int second)
+    {
+        int _colorNum = second / _countMax;
+        int _secondfirst = second % _countMax;
+
+        // グラデーション用の色
+        Color _BeforeColor = colors[_colorNum, 0];
+        Color _AfterColor = colors[_colorNum, 1];
+
+        // カウントの刻み
+        Color _DifferColor = (_AfterColor - _BeforeColor) / (_countMax - 1);
+
+        // before と after でグラデーションを作る。毎秒ごとに色変化。
+        Color _ResultColor = _BeforeColor + _DifferColor * _secondfirst;
+
+        return _ResultColor;
     }
 }
