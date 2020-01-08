@@ -19,6 +19,7 @@ The following list is an example of Modes
 ### Environment
 
 - Unity 2018.3.7f1
+- Kinect v1.8
 - Kinect with MS-SDK  
 
 ※ For details about WebApi, see [H37kouya/kinect-web-api](https://github.com/H37kouya/kinect-web-api)
