@@ -12,6 +12,7 @@ public class TimeController : MonoBehaviour
 
     // 現在時刻を更新する間隔
     public float GetTimeDiff = 10.0f;
+    // モードチェンジするか確認する間隔
     public float ModeChangeDiff = 5.0f;
 
     public Light DirectionalLight;
@@ -19,16 +20,17 @@ public class TimeController : MonoBehaviour
     public Light PointLight2;
     public Camera maincamera;
 
-    public GameObject righthand;
-    public GameObject lefthand;
+    public GameObject righthand; // 右手の座標
+    public GameObject lefthand;  // 左手の座標
     public GameObject Movingcreate;
 
     void Start()
     {
-        StartCoroutine("ModeChange");
-        StartCoroutine("TimeOn");
+        StartCoroutine("ModeChange"); // ゲームモードの変更するコルーチン
+        StartCoroutine("TimeOn");     // 現在時刻を表示、更新するコルーチン
     }
 
+    // ゲームモードを変更
     IEnumerator ModeChange()
     {
         while (true)
@@ -52,13 +54,14 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    // 現在時刻を表示
     IEnumerator TimeOn()
     {
         GetTimeDiff = 10;
 
         while (true)
         {
-            // if (DataCenter.WaitingDisplay)
+            // if (DataCenter.WaitingDisplay) // 待機画面中のみ表示のときにifのコメントアウトを外してください
             // {
             UpdateTimePanelText(); // TimePanelTextを内容を更新
             GetTimeDiff = 60 - GetTimeInt("s");
@@ -68,6 +71,7 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    // 現在時刻 文字列用
     string getTimeStr(string s = "n")
     {
         if (s == "n")
@@ -88,6 +92,7 @@ public class TimeController : MonoBehaviour
         return System.DateTime.Now.ToString();
     }
 
+    // 現在時刻 int用
     int GetTimeInt(string s = "s")
     {
         if (s == "d")
@@ -113,30 +118,34 @@ public class TimeController : MonoBehaviour
         return System.DateTime.Now.Second;
     }
 
+    // カメラの設定 ゲームモード 1 用
     void SetCameraForGamemode1()
     {
+        // 9レイヤーを追加
         maincamera.cullingMask |= (1 << 9);
     }
 
+    // カメラの設定 ゲームモード 2 用
     void SetCameraForGamemode2()
     {
+        // 9レイヤーを除く
         maincamera.cullingMask &= ~(1 << 9);
     }
 
     void SetGamemode1()
     {
-        SetLightForGamemode1(); // ライトの設定
-        SetExampleText("今は両手を横に動かしてみよう！");
-        SetCameraForGamemode1(); // カメラの設定
-        SetObjectForGamemode(1); // オブジェクトの設定
+        SetExampleText("今は両手を横に動かしてみよう！"); // 説明文の変更
+        SetLightForGamemode1();                         // ライトの設定
+        SetCameraForGamemode1();                        // カメラの設定
+        SetObjectForGamemode(1);                        // オブジェクトの設定
     }
 
     void SetGamemode2()
     {
-        SetLightForGamemode2(); // ライトの設定
-        SetExampleText("今は左手を上下に動かしてみよう！左肘が基準だよ");
-        SetCameraForGamemode2(); // カメラの設定
-        SetObjectForGamemode(2); // オブジェクトの設定
+        SetExampleText("今は左手を上下に動かしてみよう！左肘が基準だよ"); // 説明文の変更
+        SetLightForGamemode2();                                        // ライトの設定
+        SetCameraForGamemode2();                                       // カメラの設定
+        SetObjectForGamemode(2);                                       // オブジェクトの設定
     }
 
     // ゲームモード 1 用のライト
