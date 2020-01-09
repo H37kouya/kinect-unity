@@ -6,13 +6,13 @@ using System.Globalization;
 
 public class ChangeColor : MonoBehaviour
 {
-    // 色が変わるタイミング(時間)を「Cube」のInspector(Duration)で指定、初期値は1.0F
+    // 色が変わるタイミング(時間)を「Cube」のInspector(Duration)で指定、初期値は 1.0f
     public float duration = 1.0f;
     // Hierarchyにある「Cube」を「Cube 1」にドラッグする(「Cube」のInspectorにあり)
     public GameObject cube1;
     // 色を変化させる時間
     public float TimeDiff = 10.0f;
-    // カラーリスト
+    // グラデーション用のカラーリスト
     public Color[,] colors;
 
     private int _countMax = 10;
@@ -20,9 +20,8 @@ public class ChangeColor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        ColorIntialize(); // 色の初期化
-        // コルーチンスタート
-        StartCoroutine("OnChangeColor");
+        ColorIntialize();                // 色の初期化
+        StartCoroutine("OnChangeColor"); // コルーチンスタート
     }
 
     IEnumerator OnChangeColor()
@@ -86,15 +85,15 @@ public class ChangeColor : MonoBehaviour
         int _secondfirst = second % _countMax;
 
         // グラデーション用の色
-        Color _BeforeColor = colors[_colorNum, 0];
-        Color _AfterColor = colors[_colorNum, 1];
+        Color _beforeColor = colors[_colorNum, 0];
+        Color _afterColor = colors[_colorNum, 1];
 
         // カウントの刻み
-        Color _DifferColor = (_AfterColor - _BeforeColor) / (_countMax - 1);
+        Color _differColor = (_afterColor - _beforeColor) / (_countMax - 1);
 
         // before と after でグラデーションを作る。毎秒ごとに色変化。
-        Color _ResultColor = _BeforeColor + _DifferColor * _secondfirst;
+        Color _resultColor = _beforeColor + _differColor * _secondfirst;
 
-        return _ResultColor;
+        return _resultColor;
     }
 }
