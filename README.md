@@ -44,6 +44,10 @@ The pattern by the x coordinate of both hands
 ![両腕を感知する模様1](./GithubStorage/両腕を感知する模様1.png "両腕を感知する模様1")
 ![両腕を感知する模様2](./GithubStorage/両腕を感知する模様2.png "両腕を感知する模様2")
 
+### PatternKinect Functions Map
+
+![PatternKinect Functions Map](./GithubStorage/PatternKinect-map.png "PatternKinect Functions Map")
+
 #### Joint Name and Number
 
 |  No |  Name | 日本語名 |
