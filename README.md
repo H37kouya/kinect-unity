@@ -14,9 +14,7 @@ The following list is an example of Modes
 - When it is 20 to 60 minutes, the pattern is changed according to the y coordinate of the left hand.
 - If Person can't be detected Kinect, you can watch Waiting Display Mode.
 
-## Details
-
-### Environment
+## Environment
 
 - Unity 2018.3.7f1
 - Kinect v1.8
@@ -24,10 +22,24 @@ The following list is an example of Modes
 
 ※ For details about WebApi, see [H37kouya/kinect-web-api](https://github.com/H37kouya/kinect-web-api)
 
-### Installation
+## Installation
 
 - [download kinect SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
 - [download kinect ms-sdk](https://assetstore.unity.com/packages/tools/kinect-with-ms-sdk-7747)
+
+## Please Check It
+
+There is our blog about this project. If you are interested, look at the link below!
+
+### Toson Blog
+
+[Generative art made with Unity and Kinect: Part 1 (UnityとKinectで作るジェネレーティブアート:Part1)](https://toson.netlify.com/2020/01/08/unity/)
+
+### H37kouya Blog
+
+["I almost touched!" Generative art made with Unity and Kinect:Part2 (「ほぼ触れたよ！」UnityとKinectで作るジェネレーティブアート:Part2)](https://over-hk.net/articles/kinect-unity)
+
+## Details
 
 ### Documentation
 
@@ -44,7 +56,7 @@ The pattern by the x coordinate of both hands
 ![両腕を感知する模様1](./GithubStorage/両腕を感知する模様1.png "両腕を感知する模様1")
 ![両腕を感知する模様2](./GithubStorage/両腕を感知する模様2.png "両腕を感知する模様2")
 
-### PatternKinect Functions Map
+#### PatternKinect Functions Map
 
 ![PatternKinect Functions Map](./GithubStorage/PatternKinect-map.png "PatternKinect Functions Map")
 
@@ -73,7 +85,8 @@ The pattern by the x coordinate of both hands
 |  18 |  Ankle_Right  | 右足首 |
 |  19 |  Foot_Right  | 右足 |
 
-## Wait a minutes
+#### Convert Kinect Coordinates To Unity Coordinates
 
-This program is very dirty.  
-This year, I'm going to remove files that don't need.
+I'm sorry, This picture uses Japanese.
+
+![Flow Chart Convert Kinect Coordinates To Unity Coordinates](./GithubStorage/FlowChart_ConvertKinectCnToUnityCn.jpg "Flow Chart Convert Kinect Coordinates To Unity Coordinates")
